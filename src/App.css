@@ -121,8 +121,7 @@
   max-width: 1000px;
   margin: 0 auto;
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
 .story-header {
@@ -132,7 +131,7 @@
 
 .story-title {
   font-family: var(--font-title);
-  font-size: clamp(3rem, 6vw, 4.8rem);
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 20px;
@@ -153,62 +152,61 @@
   text-transform: uppercase;
 }
 
-/* Timeline Layout */
-.timeline-container {
+/* Horizontal Museum Scroll Layout */
+.museum-scroll-wrapper {
+  height: 400vh; /* This dictates how long the user scrolls to reach the end */
   position: relative;
-  margin: 60px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
+  margin-top: 60px;
 }
 
-.timeline-line {
+.museum-sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.museum-horizontal-timeline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: max-content;
+  padding: 0 50vw; /* Start in center, end when scrolled past */
+  gap: 300px;
+  position: relative;
+}
+
+.timeline-horizontal-line {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 2px;
   background: #000;
   z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .timeline-line {
-    left: 20px;
-    transform: none;
-  }
-}
-
-.timeline-node {
+.museum-node {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
   z-index: 2;
-}
-
-@media (min-width: 769px) {
-  .timeline-node {
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
-  }
-  
-  .timeline-node.left .timeline-content-box {
-    grid-column: 1;
-    text-align: right;
-  }
-  
-  .timeline-node.right .timeline-content-box {
-    grid-column: 2;
-    text-align: left;
-  }
+  width: 500px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Center Indicator Badge */
 .timeline-badge {
   position: absolute;
   left: 50%;
-  top: 0;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   background: #000;
   color: #fff;
   padding: 8px 20px;
@@ -222,26 +220,22 @@
 }
 
 @media (max-width: 768px) {
+  .museum-sticky-container {
+    margin-left: -20px; /* match smaller mobile padding */
+  }
+  .museum-node {
+    width: 320px;
+  }
+  .museum-horizontal-timeline {
+    gap: 100px;
+  }
   .timeline-badge {
-    left: 20px;
-    transform: translate(-50%, 0);
     padding: 6px 14px;
     font-size: 0.85rem;
   }
 }
 
 /* Timeline Content Card */
-.timeline-content-box {
-  padding-top: 40px;
-}
-
-@media (max-width: 768px) {
-  .timeline-content-box {
-    padding-left: 60px;
-    text-align: left;
-  }
-}
-
 .timeline-card {
   padding: 30px;
   position: relative;
@@ -250,6 +244,8 @@
   border-radius: 8px;
   box-shadow: 8px 8px 0px var(--color-accent);
   transition: transform 0.3s ease;
+  width: 100%;
+  text-align: left;
 }
 
 .timeline-card:hover {
@@ -350,7 +346,7 @@
 
 .footer-quote {
   font-family: var(--font-title);
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(1.5rem, 4vw, 3.2rem);
   font-weight: 200;
   font-style: italic;
   line-height: 1.3;
@@ -375,4 +371,77 @@
   font-size: 0.75rem;
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .top-nav {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
+  
+  .nav-logo {
+    font-size: 1.4rem;
+  }
+  
+  .nav-logo-img {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  .controls-group {
+    gap: 10px;
+  }
+  
+  .story-nav-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .story-page {
+    padding: 100px 20px 60px;
+  }
+  
+  .story-header {
+    margin-bottom: 60px;
+  }
+  
+  .timeline-container {
+    gap: 60px;
+  }
+  
+  .timeline-card {
+    padding: 20px;
+  }
+
+  .timeline-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .media-grid-section {
+    margin-top: 80px;
+  }
+
+  .media-grid-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .story-footer {
+    margin-top: 80px;
+    padding-top: 40px;
+  }
+  
+  .footer-btn-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
 }

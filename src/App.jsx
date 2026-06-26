@@ -77,7 +77,7 @@ export default function App() {
               Our Story
             </button>
           ) : (
-            <button onClick={() => setView("home")} className="story-nav-btn" style={{ background: "linear-gradient(135deg, var(--neon-cyan), hsl(180, 100%, 35%))", boxShadow: "0 4px 15px rgba(0, 255, 255, 0.4)" }}>
+            <button onClick={() => setView("home")} className="story-nav-btn">
               The Squad
             </button>
           )}

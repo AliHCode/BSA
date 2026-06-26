@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft } from "lucide-react";
 
 export default function StoryPage({ onBackClick }) {
@@ -14,6 +15,41 @@ export default function StoryPage({ onBackClick }) {
     { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 45 Karaoke", rotation: "-2deg" },
     { id: 8, type: "video", src: "/videos/memory_video2.mp4", caption: "Late Night Chai Vibe", rotation: "1deg" }
   ];
+
+  const targetRef = useRef(null);
+  const timelineRef = useRef(null);
+  const [scrollLimit, setScrollLimit] = useState(2400);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (timelineRef.current) {
+        const nodes = timelineRef.current.querySelectorAll(".museum-node");
+        if (nodes.length > 1) {
+          const firstNode = nodes[0];
+          const lastNode = nodes[nodes.length - 1];
+          const firstCenter = firstNode.offsetLeft + firstNode.offsetWidth / 2;
+          const lastCenter = lastNode.offsetLeft + lastNode.offsetWidth / 2;
+          setScrollLimit(lastCenter - firstCenter);
+        }
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    const timer = setTimeout(handleResize, 100);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timer);
+    };
+  }, []);
+  
+  // On desktop, scroll horizontally. Mobile will handle it differently via CSS.
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollLimit]);
 
   return (
     <div className="story-page">
@@ -42,84 +78,82 @@ export default function StoryPage({ onBackClick }) {
         <p className="story-subtitle">The four-year timeline of the BSA Crew</p>
       </header>
 
-      {/* Timeline */}
-      <div className="timeline-container">
-        <div className="timeline-line" />
+      {/* Horizontal Museum Timeline */}
+      <div ref={targetRef} className="museum-scroll-wrapper">
+        <div className="museum-sticky-container">
+          <motion.div ref={timelineRef} style={{ x }} className="museum-horizontal-timeline">
+            
+            <div className="timeline-horizontal-line" />
 
-        {/* Milestone 1 */}
-        <div className="timeline-node left">
-          <div className="timeline-badge" style={{ "--badge-color": "var(--neon-cyan)" }}>
-            <Calendar size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-            YEAR 1
-          </div>
-          <div className="timeline-content-box">
-            <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-cyan)" }}>
-              <h3>First Steps & The Squad Base</h3>
-              <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>First Year of University</p>
-              <p>
-                Ali moved into the hostel and met his roommate on the very first day. Within a few days, a random walk back to the hostel from class led to meeting Taqi (Shah G). 
-                Soon, Abdullah (AMB) and Qadeer (Grenade) joined the circle. 
-                Living in rooms directly opposite to each other laid the foundation for late-night gaming, class-skipping debates, and the beginning of a lifelong brotherhood.
-              </p>
+            {/* Milestone 1 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-cyan)", top: "-40px" }}>
+                <Calendar size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 1
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-cyan)" }}>
+                <h3>First Steps & The Squad Base</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>First Year of University</p>
+                <p>
+                  Ali moved into the hostel and met his roommate on the very first day. Within a few days, a random walk back to the hostel from class led to meeting Taqi (Shah G). 
+                  Soon, Abdullah (AMB) and Qadeer (Grenade) joined the circle. 
+                  Living in rooms directly opposite to each other laid the foundation for late-night gaming, class-skipping debates, and the beginning of a lifelong brotherhood.
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Milestone 2 */}
-        <div className="timeline-node right">
-          <div className="timeline-badge" style={{ "--badge-color": "var(--neon-pink)" }}>
-            <Compass size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-            YEAR 2
-          </div>
-          <div className="timeline-content-box">
-            <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-pink)" }}>
-              <h3>Room 45, Q Hall Headquarters</h3>
-              <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Second Year Shifts</p>
-              <p>
-                As we entered our second year, hostels shifted. Some stayed in different wings and halls—Taqi, Haseeb (Murshid G), Raja Hammad (Raja G), and Haris Bawa (Bawa G) were spread out. 
-                But geographical boundaries broke in Room 45, Q Hall, hosted by Hammad Abrar (Baba Kookie). 
-                Room 45 became our official central headquarters. The place where we did assignment runs, cooked late-night snacks, hosted endless parties, and solidified our squad.
-              </p>
+            {/* Milestone 2 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-pink)", bottom: "-40px", top: "auto" }}>
+                <Compass size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 2
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-pink)" }}>
+                <h3>Room 45, Q Hall Headquarters</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Second Year Shifts</p>
+                <p>
+                  As we entered our second year, hostels shifted. Some stayed in different wings and halls—Taqi, Haseeb (Murshid G), Raja Hammad (Raja G), and Haris Bawa (Bawa G) were spread out. 
+                  But geographical boundaries broke in Room 45, Q Hall, hosted by Hammad Abrar (Baba Kookie). 
+                  Room 45 became our official central headquarters. The place where we did assignment runs, cooked late-night snacks, hosted endless parties, and solidified our squad.
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Milestone 3 */}
-        <div className="timeline-node left">
-          <div className="timeline-badge" style={{ "--badge-color": "var(--neon-gold)" }}>
-            <Coffee size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-            EVERY NIGHT
-          </div>
-          <div className="timeline-content-box">
-            <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-gold)" }}>
-              <h3>The Quetta Chronicles</h3>
-              <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Midnight Therapy</p>
-              <p>
-                Quetta Restaurant wasn't just a tea stall; it was a sanctuary. Every late-night session in Room 45 naturally ended with a trip to Quetta. 
-                Over hot cups of doodh patti, we talked about careers, made fun of professors, shared our secrets, and laughed until the sun came up. 
-                Those hours of sitting on plastic chairs under the open sky built a bond that semesters could never teach.
-              </p>
+            {/* Milestone 3 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-gold)", top: "-40px" }}>
+                <Coffee size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                EVERY NIGHT
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-gold)" }}>
+                <h3>The Quetta Chronicles</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Midnight Therapy</p>
+                <p>
+                  Quetta Restaurant wasn't just a tea stall; it was a sanctuary. Every late-night session in Room 45 naturally ended with a trip to Quetta. 
+                  Over hot cups of doodh patti, we talked about careers, made fun of professors, shared our secrets, and laughed until the sun came up. 
+                  Those hours of sitting on plastic chairs under the open sky built a bond that semesters could never teach.
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Milestone 4 */}
-        <div className="timeline-node right">
-          <div className="timeline-badge" style={{ "--badge-color": "var(--text-white)" }}>
-            <GraduationCap size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-            THE FINALE
-          </div>
-          <div className="timeline-content-box">
-            <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--text-white)" }}>
-              <h3>Class Dismissed</h3>
-              <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
-              <p>
-                We attended our very last university class yesterday. The books are closed, and only two weeks of finals stand between us and the finish line. 
-                From entering university as confused hostelites to leaving as a family that has stood by each other through exams, parties, and life's shifts—we lived it all. 
-                The era might be ending, but the brotherhood is locked in forever.
-              </p>
+            {/* Milestone 4 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--text-white)", bottom: "-40px", top: "auto" }}>
+                <GraduationCap size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                THE FINALE
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--text-white)" }}>
+                <h3>Class Dismissed</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
+                <p>
+                  We attended our very last university class yesterday. The books are closed, and only two weeks of finals stand between us and the finish line. 
+                  From entering university as confused hostelites to leaving as a family that has stood by each other through exams, parties, and life's shifts—we lived it all. 
+                  The era might be ending, but the brotherhood is locked in forever.
+                </p>
+              </div>
             </div>
-          </div>
+
+          </motion.div>
         </div>
       </div>
 

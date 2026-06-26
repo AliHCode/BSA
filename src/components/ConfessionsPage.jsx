@@ -21,10 +21,10 @@ export default function ConfessionsPage() {
             exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
             transition={{ duration: 0.5 }}
           >
-            <ShieldAlert size={80} color="#ff2a5f" className="pulse-icon" />
+            <ShieldAlert size={50} color="#ff2a5f" className="pulse-icon" />
             <h1 className="warning-title">BSA CONFESSIONS</h1>
             <p className="warning-text">
-              WARNING: Entering this area exposes highly chaotic and deeply controversial Room 45 activities. 
+              WARNING: Entering this area exposes highly chaotic and deeply controversial activities. 
             </p>
             <button className="btn-gta btn-danger unlock-btn" onClick={handleUnlock}>
               <Skull size={20} /> ATTEMPT DECRYPTION
@@ -44,7 +44,7 @@ export default function ConfessionsPage() {
               animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
               transition={{ duration: 0.6, type: "spring", bounce: 0.6 }}
             >
-              <LockKeyhole size={100} color="#ff2a5f" style={{ marginBottom: "20px" }} />
+              <LockKeyhole size={60} color="#ff2a5f" style={{ marginBottom: "20px" }} />
             </motion.div>
 
             <h1 className="glitch-text" data-text="ACCESS DENIED">ACCESS DENIED</h1>

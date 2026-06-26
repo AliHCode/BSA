@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 
 export default function Hero({ onStartClick }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,15 +30,76 @@ export default function Hero({ onStartClick }) {
   const bgTextScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const bgTextOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  // Different parallax speeds for the floating images
+  // Different parallax speeds for the floating images (Scroll)
   const img1Y = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
   const img2Y = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
   const img3Y = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
   const img4Y = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
-  // Foreground content parallax and fade
+  // Foreground content parallax and fade (Scroll)
   const foregroundY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
   const foregroundOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  // ==========================================
+  // Cursor-Driven & Gyroscope Parallax Logic (3D Depth)
+  // ==========================================
+  const mouseX = useSpring(0, { stiffness: 50, damping: 20 });
+  const mouseY = useSpring(0, { stiffness: 50, damping: 20 });
+
+  const handleMouseMove = (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  useEffect(() => {
+    const handleOrientation = (e) => {
+      let { gamma, beta } = e;
+      if (gamma === null || beta === null) return;
+
+      // Limit tilt to a readable range (-45 to 45 degrees)
+      gamma = Math.max(-45, Math.min(45, gamma));
+      // Assume resting phone angle is ~45deg front-to-back. Center it around 0.
+      beta = Math.max(0, Math.min(90, beta)) - 45;
+
+      // Normalize to -1 to 1 to match mouse coordinate scaling
+      const x = gamma / 45;
+      const y = beta / 45;
+
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+
+    return () => {
+      if (window.DeviceOrientationEvent) {
+        window.removeEventListener("deviceorientation", handleOrientation);
+      }
+    };
+  }, [mouseX, mouseY]);
+
+  // Mouse Parallax Multipliers
+  const bgTextMouseX = useTransform(mouseX, v => v * -40);
+  const bgTextMouseY = useTransform(mouseY, v => v * -40);
+
+  const img1MouseX = useTransform(mouseX, v => v * 30);
+  const img1MouseY = useTransform(mouseY, v => v * 30);
+
+  const img2MouseX = useTransform(mouseX, v => v * -20);
+  const img2MouseY = useTransform(mouseY, v => v * -20);
+
+  const img3MouseX = useTransform(mouseX, v => v * 50);
+  const img3MouseY = useTransform(mouseY, v => v * 50);
+
+  const img4MouseX = useTransform(mouseX, v => v * -35);
+  const img4MouseY = useTransform(mouseY, v => v * -35);
+
+  const foregroundMouseX = useTransform(mouseX, v => v * 15);
+  const foregroundMouseY = useTransform(mouseY, v => v * 15);
 
   return (
     <>
@@ -77,65 +138,75 @@ export default function Hero({ onStartClick }) {
         )}
       </AnimatePresence>
 
-      <div className="hero-wow-container" ref={containerRef}>
+      <div className="hero-wow-container" ref={containerRef} onMouseMove={handleMouseMove}>
         {/* Giant Outline Text */}
         <motion.div className="hero-bg-text-wrapper" style={{ y: bgTextY, scale: bgTextScale, opacity: bgTextOpacity }}>
-          <motion.div 
-            className="hero-bg-text"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={!isLoading ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
-          >
-            BSA
+          <motion.div style={{ x: bgTextMouseX, y: bgTextMouseY, width: "100%", display: "flex", justifyContent: "center" }}>
+            <motion.div 
+              className="hero-bg-text"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={!isLoading ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+            >
+              BSA
+            </motion.div>
           </motion.div>
         </motion.div>
 
         {/* Floating Collage Images */}
         <div className="hero-floating-images">
           <motion.div className="hero-float-wrapper img-1-wrapper" style={{ y: img1Y }}>
-            <motion.img 
-              src="/images/Ali.jpeg" 
-              className="hero-float-img img-1" 
-              initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
-              animate={!isLoading ? { opacity: 1, y: 0, rotate: -8, scale: 1 } : {}}
-              transition={{ delay: 0.3, duration: 1.2, type: "spring", bounce: 0.4 }}
-            />
+            <motion.div style={{ x: img1MouseX, y: img1MouseY, width: "100%", height: "100%" }}>
+              <motion.img 
+                src="/images/Ali.jpeg" 
+                className="hero-float-img img-1" 
+                initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
+                animate={!isLoading ? { opacity: 1, y: 0, rotate: -8, scale: 1 } : {}}
+                transition={{ delay: 0.3, duration: 1.2, type: "spring", bounce: 0.4 }}
+              />
+            </motion.div>
           </motion.div>
 
           <motion.div className="hero-float-wrapper img-2-wrapper" style={{ y: img2Y }}>
-            <motion.img 
-              src="/images/Taqi.jpeg" 
-              className="hero-float-img img-2" 
-              initial={{ opacity: 0, y: -150, rotate: 20, scale: 0.8 }}
-              animate={!isLoading ? { opacity: 1, y: 0, rotate: 5, scale: 1 } : {}}
-              transition={{ delay: 0.4, duration: 1.2, type: "spring", bounce: 0.4 }}
-            />
+            <motion.div style={{ x: img2MouseX, y: img2MouseY, width: "100%", height: "100%" }}>
+              <motion.img 
+                src="/images/Taqi.jpeg" 
+                className="hero-float-img img-2" 
+                initial={{ opacity: 0, y: -150, rotate: 20, scale: 0.8 }}
+                animate={!isLoading ? { opacity: 1, y: 0, rotate: 5, scale: 1 } : {}}
+                transition={{ delay: 0.4, duration: 1.2, type: "spring", bounce: 0.4 }}
+              />
+            </motion.div>
           </motion.div>
 
           <motion.div className="hero-float-wrapper img-3-wrapper" style={{ y: img3Y }}>
-            <motion.img 
-              src="/images/Haseeb.jpeg" 
-              className="hero-float-img img-3" 
-              initial={{ opacity: 0, x: 150, rotate: 25, scale: 0.8 }}
-              animate={!isLoading ? { opacity: 1, x: 0, rotate: 12, scale: 1 } : {}}
-              transition={{ delay: 0.5, duration: 1.2, type: "spring", bounce: 0.4 }}
-            />
+            <motion.div style={{ x: img3MouseX, y: img3MouseY, width: "100%", height: "100%" }}>
+              <motion.img 
+                src="/images/Haseeb.jpeg" 
+                className="hero-float-img img-3" 
+                initial={{ opacity: 0, x: 150, rotate: 25, scale: 0.8 }}
+                animate={!isLoading ? { opacity: 1, x: 0, rotate: 12, scale: 1 } : {}}
+                transition={{ delay: 0.5, duration: 1.2, type: "spring", bounce: 0.4 }}
+              />
+            </motion.div>
           </motion.div>
 
           <motion.div className="hero-float-wrapper img-4-wrapper" style={{ y: img4Y }}>
-            <motion.img 
-              src="/images/Abdullah.jpeg" 
-              className="hero-float-img img-4" 
-              initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
-              animate={!isLoading ? { opacity: 1, y: 0, rotate: -5, scale: 1 } : {}}
-              transition={{ delay: 0.6, duration: 1.2, type: "spring", bounce: 0.4 }}
-            />
+            <motion.div style={{ x: img4MouseX, y: img4MouseY, width: "100%", height: "100%" }}>
+              <motion.img 
+                src="/images/Abdullah.jpeg" 
+                className="hero-float-img img-4" 
+                initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
+                animate={!isLoading ? { opacity: 1, y: 0, rotate: -5, scale: 1 } : {}}
+                transition={{ delay: 0.6, duration: 1.2, type: "spring", bounce: 0.4 }}
+              />
+            </motion.div>
           </motion.div>
         </div>
 
         {/* Foreground Content */}
         <motion.div className="hero-foreground-wrapper" style={{ y: foregroundY, opacity: foregroundOpacity }}>
-          <div className="hero-foreground">
+          <motion.div className="hero-foreground" style={{ x: foregroundMouseX, y: foregroundMouseY }}>
             <motion.div 
               className="hero-badge-container"
               initial={{ opacity: 0, y: -30, filter: "blur(10px)" }}
@@ -191,7 +262,7 @@ export default function Hero({ onStartClick }) {
                 </button>
               </motion.div>
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Scroll Indicator */}
