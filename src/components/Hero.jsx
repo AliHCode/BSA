@@ -208,16 +208,6 @@ export default function Hero({ onStartClick }) {
         <motion.div className="hero-foreground-wrapper" style={{ y: foregroundY, opacity: foregroundOpacity }}>
           <motion.div className="hero-foreground" style={{ x: foregroundMouseX, y: foregroundMouseY }}>
             <motion.div 
-              className="hero-badge-container"
-              initial={{ opacity: 0, y: -30, filter: "blur(10px)" }}
-              animate={!isLoading ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-              transition={{ delay: 0.7, duration: 0.8 }}
-            >
-              <span className="hero-badge">EST. FIRST YEAR</span>
-              <span className="hero-badge">ROOM 45</span>
-            </motion.div>
-
-            <motion.div 
               className="hero-title-container"
               initial="hidden"
               animate={!isLoading ? "visible" : "hidden"}

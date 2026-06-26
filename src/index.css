@@ -330,25 +330,6 @@ button {
   max-width: 800px;
 }
 
-.hero-badge-container {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.hero-badge {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  letter-spacing: 4px;
-  font-weight: 700;
-  color: #000;
-  background: #fff;
-  padding: 8px 24px;
-  border-radius: 50px;
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
 .hero-title-container {
   display: flex;
   flex-direction: column;
