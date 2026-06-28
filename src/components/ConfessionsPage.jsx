@@ -11,6 +11,7 @@ export default function ConfessionsPage() {
   const [showDeniedScreen, setShowDeniedScreen] = useState(false);
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0); // starts immediately at Q1
   const [isBooting, setIsBooting] = useState(false);
+  const [showBypassButton, setShowBypassButton] = useState(false);
 
   const terminalEndRef = useRef(null);
 
@@ -131,18 +132,52 @@ export default function ConfessionsPage() {
   };
 
   const triggerFakeFailureLogs = () => {
-    setTerminalLogs((prev) => [
-      ...prev,
+    setIsBooting(true);
+    const sequenceLines = [
+      "CORRECT ANSWER. INITIATING FIREWALL OVERRIDE...",
+      "DECRYPTING DATABASE FILES...",
       ">> BRUTE FORCE BYPASS PROTOCOL COMPILED...",
       ">> ATTEMPTING OVERRIDE...",
       ">> ACCESS PORT 0x7E1D BYPASS: SUCCESS",
       ">> DECRYPTING CONFESSIONS VAULT...",
       "[FATAL] OVERRIDE BLOCKED BY CENTRAL ADMINISTRATOR.",
       "SYSTEM LOG: Vault locked down for administrative safety."
-    ]);
-    setTimeout(() => {
-      setShowDeniedScreen(true);
-    }, 2200);
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    // Start with a new empty line
+    setTerminalLogs((prev) => [...prev, ""]);
+
+    const typingTimer = setInterval(() => {
+      if (lineIndex < sequenceLines.length) {
+        const currentLineText = sequenceLines[lineIndex];
+        if (charIndex < currentLineText.length) {
+          const nextChar = currentLineText[charIndex];
+          setTerminalLogs((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = (updated[updated.length - 1] || "") + nextChar;
+            return updated;
+          });
+          charIndex++;
+        } else {
+          // Move to next line
+          lineIndex++;
+          charIndex = 0;
+          if (lineIndex < sequenceLines.length) {
+            setTerminalLogs((prev) => [...prev, ""]);
+          }
+        }
+      } else {
+        // Finished typing all lines
+        clearInterval(typingTimer);
+        setIsBooting(false);
+        setTimeout(() => {
+          setShowDeniedScreen(true);
+        }, 800);
+      }
+    }, 12); // Fast and smooth 12ms typing speed
   };
 
   const executeCommand = (cmd) => {
@@ -158,11 +193,6 @@ export default function ConfessionsPage() {
     if (currentQuestion.answers.includes(cleanCmd)) {
       if (activeQuestionIndex === activeQuestions.length - 1) {
         // All questions correct -> trigger fake override block
-        setTerminalLogs((prev) => [
-          ...prev,
-          "CORRECT ANSWER. INITIATING FIREWALL OVERRIDE...",
-          "DECRYPTING DATABASE FILES..."
-        ]);
         triggerFakeFailureLogs();
       } else {
         // Next question
@@ -177,6 +207,7 @@ export default function ConfessionsPage() {
       }
     } else {
       // Failed!
+      setShowBypassButton(true);
       if (activeQuestionIndex === 0) {
         // Failed stage 1: replace Q1 with a new question (different from current Q1 and current Q2)
         const currentQ2Text = activeQuestions[1]?.q;
@@ -418,29 +449,31 @@ export default function ConfessionsPage() {
             </div>
 
             {/* Matrix Bypass Button on terminal side for keyboard-less mobile users */}
-            <button 
-              onClick={() => { setShowMatrix(true); setMatrixProgress(0); }} 
-              className="btn-gta"
-              style={{ 
-                marginTop: "20px", 
-                fontSize: "0.9rem", 
-                padding: "10px 20px",
-                borderColor: "#00ff41",
-                color: "#00ff41",
-                background: "rgba(0, 255, 65, 0.05)",
-                transition: "all 0.3s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#00ff41";
-                e.currentTarget.style.color = "#000";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(0, 255, 65, 0.05)";
-                e.currentTarget.style.color = "#00ff41";
-              }}
-            >
-              <Terminal size={16} style={{ marginRight: "6px", display: "inline-block", verticalAlign: "middle" }} /> Matrix Bypass (Tap Screen Hack)
-            </button>
+            {showBypassButton && (
+              <button 
+                onClick={() => { setShowMatrix(true); setMatrixProgress(0); }} 
+                className="btn-gta"
+                style={{ 
+                  marginTop: "20px", 
+                  fontSize: "0.9rem", 
+                  padding: "10px 20px",
+                  borderColor: "#00ff41",
+                  color: "#00ff41",
+                  background: "rgba(0, 255, 65, 0.05)",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#00ff41";
+                  e.currentTarget.style.color = "#000";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(0, 255, 65, 0.05)";
+                  e.currentTarget.style.color = "#00ff41";
+                }}
+              >
+                <Terminal size={16} style={{ marginRight: "6px", display: "inline-block", verticalAlign: "middle" }} /> Matrix Bypass (Tap Screen Hack)
+              </button>
+            )}
             
             <div className="disclaimer-footer" style={{ marginTop: "40px" }}>
               <p className="pulse-icon" style={{ color: "#ff2a5f", fontSize: "1.2rem", fontWeight: "bold", letterSpacing: "4px" }}>

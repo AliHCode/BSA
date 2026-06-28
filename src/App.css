@@ -122,6 +122,26 @@
   margin: 0 auto;
   min-height: 100svh;
   display: block;
+  position: relative;
+}
+
+.story-back-btn {
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  padding: 6px 14px !important;
+  font-size: 0.8rem !important;
+  border: 1px solid var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+}
+
+.story-back-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 .story-header {
@@ -221,7 +241,9 @@
 
 @media (max-width: 768px) {
   .museum-sticky-container {
-    margin-left: -20px; /* match smaller mobile padding */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
   }
   .museum-node {
     width: 320px;
@@ -402,6 +424,11 @@
   
   .story-page {
     padding: 100px 20px 60px;
+  }
+
+  .story-back-btn {
+    left: 20px;
+    top: 70px;
   }
   
   .story-header {

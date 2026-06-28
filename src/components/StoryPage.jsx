@@ -33,7 +33,8 @@ export default function StoryPage({ onBackClick }) {
           const lastNode = nodes[nodes.length - 1];
           const firstCenter = firstNode.offsetLeft + firstNode.offsetWidth / 2;
           const lastCenter = lastNode.offsetLeft + lastNode.offsetWidth / 2;
-          setScrollLimit(lastCenter - firstCenter);
+          const isMobile = window.innerWidth <= 768;
+          setScrollLimit(lastCenter - firstCenter + (isMobile ? 120 : 0));
         }
       }
     };
@@ -56,15 +57,7 @@ export default function StoryPage({ onBackClick }) {
       {/* Back Button */}
       <button 
         onClick={onBackClick} 
-        className="btn-gta"
-        style={{ 
-          alignSelf: "flex-start", 
-          marginBottom: "40px",
-          padding: "10px 20px",
-          fontSize: "1rem",
-          borderColor: "var(--neon-cyan)",
-          boxShadow: "0 0 10px rgba(0, 255, 255, 0.2)"
-        }}
+        className="btn-gta story-back-btn"
       >
         <ArrowLeft size={16} />
         Back To Squad
