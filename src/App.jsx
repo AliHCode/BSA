@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Lenis from "lenis";
 import "./App.css";
-import "./App.css";
 import Hero from "./components/Hero";
 import SquadScroll from "./components/SquadScroll";
 import StoryPage from "./components/StoryPage";
@@ -12,26 +11,40 @@ export default function App() {
 
   // Initialize Lenis smooth scroll and handle view shifts
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-    });
+    // Reset scroll positions before initializing Lenis
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    // Detect if device has touch support (mobile/tablet) to bypass Lenis virtual scroll
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    let lenis = null;
+    let rafId = null;
+
+    if (!isTouch) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1,
+      });
+
+      function raf(time) {
+        lenis?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+
+      rafId = requestAnimationFrame(raf);
+      lenis.scrollTo(0, { immediate: true });
     }
 
-    requestAnimationFrame(raf);
-
-    // Reset scroll positions on change
-    window.scrollTo(0, 0);
-    lenis.scrollTo(0, { immediate: true });
-
     return () => {
-      lenis.destroy();
+      if (lenis) {
+        lenis.destroy();
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, [view]);
 

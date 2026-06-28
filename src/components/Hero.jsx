@@ -3,6 +3,12 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "fra
 
 export default function Hero({ onStartClick }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [heroImages, setHeroImages] = useState([
+    "/images/Ali.jpeg",
+    "/images/Taqi.jpeg",
+    "/images/Haseeb.jpeg",
+    "/images/Abdullah.jpeg"
+  ]);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -10,6 +16,21 @@ export default function Hero({ onStartClick }) {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
+
+    // Randomize Hero Images
+    const allImages = [
+      "/images/Ali.jpeg",
+      "/images/Taqi.jpeg",
+      "/images/Abdullah.jpeg",
+      "/images/Qadeer.jpeg",
+      "/images/Haseeb.jpeg",
+      "/images/Hammadkhalil.jpeg",
+      "/images/Haris.jpeg",
+      "/images/Hammadabrar.jpeg"
+    ];
+    const shuffled = [...allImages].sort(() => 0.5 - Math.random()).slice(0, 4);
+    setHeroImages(shuffled);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -158,7 +179,7 @@ export default function Hero({ onStartClick }) {
           <motion.div className="hero-float-wrapper img-1-wrapper" style={{ y: img1Y }}>
             <motion.div style={{ x: img1MouseX, y: img1MouseY, width: "100%", height: "100%" }}>
               <motion.img 
-                src="/images/Ali.jpeg" 
+                src={heroImages[0]} 
                 className="hero-float-img img-1" 
                 initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
                 animate={!isLoading ? { opacity: 1, y: 0, rotate: -8, scale: 1 } : {}}
@@ -170,7 +191,7 @@ export default function Hero({ onStartClick }) {
           <motion.div className="hero-float-wrapper img-2-wrapper" style={{ y: img2Y }}>
             <motion.div style={{ x: img2MouseX, y: img2MouseY, width: "100%", height: "100%" }}>
               <motion.img 
-                src="/images/Taqi.jpeg" 
+                src={heroImages[1]} 
                 className="hero-float-img img-2" 
                 initial={{ opacity: 0, y: -150, rotate: 20, scale: 0.8 }}
                 animate={!isLoading ? { opacity: 1, y: 0, rotate: 5, scale: 1 } : {}}
@@ -182,7 +203,7 @@ export default function Hero({ onStartClick }) {
           <motion.div className="hero-float-wrapper img-3-wrapper" style={{ y: img3Y }}>
             <motion.div style={{ x: img3MouseX, y: img3MouseY, width: "100%", height: "100%" }}>
               <motion.img 
-                src="/images/Haseeb.jpeg" 
+                src={heroImages[2]} 
                 className="hero-float-img img-3" 
                 initial={{ opacity: 0, x: 150, rotate: 25, scale: 0.8 }}
                 animate={!isLoading ? { opacity: 1, x: 0, rotate: 12, scale: 1 } : {}}
@@ -194,7 +215,7 @@ export default function Hero({ onStartClick }) {
           <motion.div className="hero-float-wrapper img-4-wrapper" style={{ y: img4Y }}>
             <motion.div style={{ x: img4MouseX, y: img4MouseY, width: "100%", height: "100%" }}>
               <motion.img 
-                src="/images/Abdullah.jpeg" 
+                src={heroImages[3]} 
                 className="hero-float-img img-4" 
                 initial={{ opacity: 0, y: 150, rotate: -20, scale: 0.8 }}
                 animate={!isLoading ? { opacity: 1, y: 0, rotate: -5, scale: 1 } : {}}
@@ -237,7 +258,7 @@ export default function Hero({ onStartClick }) {
                 className="hero-editorial-desc"
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
               >
-                More than just a group of friends. Through four years of changing hostels, shared chaos, and profound debates in Q-Hall, our brotherhood was forged over countless cups of tea. Rooms changed, but the bond remained unbreakable. This is our legacy.
+                BSA is a group of eight friends who turned hostel life into pure chaos. From wild pranks and hiding day scholars' phones to late-night tea runs, this is their story.
               </motion.p>
               
               <motion.div 

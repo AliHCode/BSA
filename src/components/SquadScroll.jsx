@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 export default function SquadScroll({ onStoryClick }) {
   const [orderedMembers, setOrderedMembers] = useState([]);
 
-  // Shuffle squad members on mount, keeping Ali Hussnain (Meetha G) first
+  // Shuffle squad members on mount, keeping Ali Hussnain (Meetha) first
   useEffect(() => {
     const ali = membersData.find((m) => m.id === "ali");
     const others = membersData.filter((m) => m.id !== "ali");
@@ -126,25 +126,7 @@ export default function SquadScroll({ onStoryClick }) {
                   <p style={{ whiteSpace: "pre-line" }}>{member.letter}</p>
                 </motion.div>
 
-                <motion.div 
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-                  }}
-                  style={{ display: "flex", gap: "16px" }}
-                >
-                  <button 
-                    onClick={onStoryClick} 
-                    className="btn-gta"
-                    style={{ 
-                      fontSize: "1rem", 
-                      padding: "10px 20px", 
-                    }}
-                  >
-                    <BookOpen size={16} />
-                    View Our Full Story
-                  </button>
-                </motion.div>
+
               </motion.div>
 
             </div>
@@ -164,7 +146,7 @@ export default function SquadScroll({ onStoryClick }) {
             animate={{ x: ["0%", "-50%"] }}
             transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           >
-            BROTHERHOOD • MEMORIES • ROOM 45 • QUETTA RESTAURANT • BROTHERHOOD • MEMORIES • ROOM 45 • QUETTA RESTAURANT • 
+            BROTHERHOOD • MEMORIES • ROOM 235 & 111 • QUETTA RESTAURANT • BROTHERHOOD • MEMORIES • ROOM 235 & 111 • QUETTA RESTAURANT • 
           </motion.div>
         </div>
 
@@ -222,11 +204,13 @@ const AliModernSection = ({ member, onStoryClick }) => {
         </motion.div>
 
         <motion.div className="ali-text-column" style={{ y: yText }}>
-           <div className="ali-modern-badge">THE CREATOR</div>
-           <h2 className="ali-modern-title">I AM ALI.</h2>
-           <p className="ali-modern-desc">
-             A proud member of BSA. While the rest of the boys were busy causing chaos in Q-Hall and living in the moment, I was documenting it. I built this space because some eras are too legendary to just live in the past. This isn't just a website. This is our legacy.
-           </p>
+           <h2 className="ali-modern-title" style={{ marginBottom: "10px" }}>I AM ALI.</h2>
+           <span className="member-nickname" style={{ color: member.accentColor, display: "block", marginBottom: "35px" }}>"{member.nickname}"</span>
+              <p className="ali-modern-desc">
+                I started university as a quiet and shy kid, but this squad changed me into a confident and positive person. To everyone else, I might look like a quiet and innocent guy, but only the BSA boys know the real me!
+                <br /><br />
+                A proud member of BSA. While the rest of the boys were busy causing chaos in university and living in the moment, I decided to create this. I built this space because some eras are too legendary to just live in the past.
+              </p>
            <button onClick={onStoryClick} className="ali-modern-btn">
              EXPLORE THE ARCHIVES
            </button>

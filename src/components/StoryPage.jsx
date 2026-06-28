@@ -7,12 +7,12 @@ export default function StoryPage({ onBackClick }) {
   // Array of memories for the Polaroid Grid
   const mediaMemories = [
     { id: 1, type: "image", src: "/images/memory_class.jpg", caption: "The First Class", rotation: "-3deg" },
-    { id: 2, type: "image", src: "/images/memory_room45.jpg", caption: "Room 45 Shenanigans", rotation: "2deg" },
+    { id: 2, type: "image", src: "/images/memory_room235.jpg", caption: "Room 235 Shenanigans", rotation: "2deg" },
     { id: 3, type: "image", src: "/images/memory_quetta.jpg", caption: "Quetta Chai Therapy", rotation: "-2deg" },
     { id: 4, type: "image", src: "/images/memory_trip.jpg", caption: "Endless Parties", rotation: "3deg" },
     { id: 5, type: "image", src: "/images/memory_exam.jpg", caption: "Exam Prep Nightmares", rotation: "-1deg" },
     { id: 6, type: "image", src: "/images/memory_lastclass.jpg", caption: "The Final Class", rotation: "4deg" },
-    { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 45 Karaoke", rotation: "-2deg" },
+    { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 235 Karaoke", rotation: "-2deg" },
     { id: 8, type: "video", src: "/videos/memory_video2.mp4", caption: "Late Night Chai Vibe", rotation: "1deg" }
   ];
 
@@ -89,15 +89,13 @@ export default function StoryPage({ onBackClick }) {
             <div className="museum-node">
               <div className="timeline-badge" style={{ "--badge-color": "var(--neon-cyan)", top: "-40px" }}>
                 <Calendar size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-                YEAR 1
+                YEAR 1 (SEP 2022)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-cyan)" }}>
-                <h3>First Steps & The Squad Base</h3>
-                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>First Year of University</p>
+                <h3>First Steps & The Core Group</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>JBH Hall</p>
                 <p>
-                  Ali moved into the hostel and met his roommate on the very first day. Within a few days, a random walk back to the hostel from class led to meeting Taqi (Shah G). 
-                  Soon, Abdullah (AMB) and Qadeer (Grenade) joined the circle. 
-                  Living in rooms directly opposite to each other laid the foundation for late-night gaming, class-skipping debates, and the beginning of a lifelong brotherhood.
+                  September 2022 mein university life shuru hui. JBH Hall ke room 221 aur aamne-samne ke rooms mein hostelites ne dosti ki shuruaat ki. Shuru mein random groups ban rahe thay, but Taqi (Shah G) aur doston ki frequency match hone se group ka aaghaz hua. Pehlay saal ki late-night discussions aur class skips ne dosti ko mazboot kiya.
                 </p>
               </div>
             </div>
@@ -106,15 +104,13 @@ export default function StoryPage({ onBackClick }) {
             <div className="museum-node">
               <div className="timeline-badge" style={{ "--badge-color": "var(--neon-pink)", bottom: "-40px", top: "auto" }}>
                 <Compass size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-                YEAR 2
+                YEAR 2 (2023 - 2024)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-pink)" }}>
-                <h3>Room 45, Q Hall Headquarters</h3>
-                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Second Year Shifts</p>
+                <h3>Ali Hall & The Circle Grows</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
                 <p>
-                  As we entered our second year, hostels shifted. Some stayed in different wings and halls—Taqi, Haseeb (Murshid G), Raja Hammad (Raja G), and Haris Bawa (Bawa G) were spread out. 
-                  But geographical boundaries broke in Room 45, Q Hall, hosted by Hammad Abrar (Baba Kookie). 
-                  Room 45 became our official central headquarters. The place where we did assignment runs, cooked late-night snacks, hosted endless parties, and solidified our squad.
+                  Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari shararat ki gayi!
                 </p>
               </div>
             </div>
@@ -123,15 +119,13 @@ export default function StoryPage({ onBackClick }) {
             <div className="museum-node">
               <div className="timeline-badge" style={{ "--badge-color": "var(--neon-gold)", top: "-40px" }}>
                 <Coffee size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-                EVERY NIGHT
+                YEAR 3 (2024 - 2025)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-gold)" }}>
-                <h3>The Quetta Chronicles</h3>
-                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>Midnight Therapy</p>
+                <h3>Room 235 & The Red Mehran</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>BSA Formation & Peak Pranks</p>
                 <p>
-                  Quetta Restaurant wasn't just a tea stall; it was a sanctuary. Every late-night session in Room 45 naturally ended with a trip to Quetta. 
-                  Over hot cups of doodh patti, we talked about careers, made fun of professors, shared our secrets, and laughed until the sun came up. 
-                  Those hours of sitting on plastic chairs under the open sky built a bond that semesters could never teach.
+                  Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak shararaton ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!
                 </p>
               </div>
             </div>
@@ -140,15 +134,13 @@ export default function StoryPage({ onBackClick }) {
             <div className="museum-node">
               <div className="timeline-badge" style={{ "--badge-color": "var(--text-white)", bottom: "-40px", top: "auto" }}>
                 <GraduationCap size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-                THE FINALE
+                YEAR 4 (THE FINALE)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--text-white)" }}>
-                <h3>Class Dismissed</h3>
+                <h3>Room 111 & The Final Chapter</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
                 <p>
-                  We attended our very last university class yesterday. The books are closed, and only two weeks of finals stand between us and the finish line. 
-                  From entering university as confused hostelites to leaving as a family that has stood by each other through exams, parties, and life's shifts—we lived it all. 
-                  The era might be ending, but the brotherhood is locked in forever.
+                  Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta shararaton ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family.
                 </p>
               </div>
             </div>
@@ -220,7 +212,7 @@ export default function StoryPage({ onBackClick }) {
       {/* Emotional Footer Quote */}
       <footer className="story-footer">
         <h3 className="footer-quote">
-          Room 45. Quetta. Hostel Nights.<br />
+          Room 235 & 111. Quetta. Hostel Nights.<br />
           <span>We lived it.</span>
         </h3>
         
