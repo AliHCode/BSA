@@ -303,11 +303,106 @@
   color: var(--text-white);
 }
 
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 40px;
-  padding: 20px 0;
+/* 3D Polaroid Scatter Board Styling */
+.polaroid-scatter-canvas {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: 850px;
+  background: #09090c;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  margin-bottom: 30px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.board-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.scatter-card {
+  position: absolute;
+  width: 200px !important;
+  padding: 10px 10px 18px !important;
+  box-shadow: 4px 6px 18px rgba(0, 0, 0, 0.45);
+  touch-action: none;
+  user-select: none;
+  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.scatter-card:active {
+  cursor: grabbing;
+  box-shadow: 8px 12px 28px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Lightbox Modal CSS */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(4, 4, 6, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 750px;
+  width: 100%;
+  background: var(--bg-darker);
+  border: 1px solid var(--color-border);
+  padding: 14px 14px 24px;
+  border-radius: 4px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-media {
+  max-height: 65vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  transition: color 0.2s ease;
+}
+
+.lightbox-close:hover {
+  color: var(--color-accent);
 }
 
 .polaroid-card {
@@ -456,9 +551,18 @@
     margin-bottom: 30px;
   }
 
-  .media-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 20px;
+  .polaroid-scatter-canvas {
+    height: 700px;
+  }
+  .scatter-card {
+    width: 130px !important;
+    padding: 6px 6px 12px !important;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.4) !important;
+  }
+  .scatter-card .polaroid-caption {
+    font-size: 0.6rem !important;
+    margin-top: 10px !important;
+    letter-spacing: 1px !important;
   }
 
   .story-footer {

@@ -1,29 +1,44 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft, Grid, Shuffle, X, Maximize2 } from "lucide-react";
 
 export default function StoryPage({ onBackClick }) {
   
-  // Array of memories for the Polaroid Grid
+  // Array of memories for the Polaroid Grid / 3D Scatter Board
   const mediaMemories = [
-    { id: 1, type: "image", src: "/images/memory_class.jpg", caption: "The First Class", rotation: "-3deg" },
-    { id: 2, type: "image", src: "/images/memory_room235.jpg", caption: "Room 235 Shenanigans", rotation: "2deg" },
-    { id: 3, type: "image", src: "/images/memory_quetta.jpg", caption: "Quetta Chai Therapy", rotation: "-2deg" },
-    { id: 4, type: "image", src: "/images/memory_trip.jpg", caption: "Endless Parties", rotation: "3deg" },
-    { id: 5, type: "image", src: "/images/memory_exam.jpg", caption: "Exam Prep Nightmares", rotation: "-1deg" },
-    { id: 6, type: "image", src: "/images/memory_lastclass.jpg", caption: "The Final Class", rotation: "4deg" },
-    { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 235 Karaoke", rotation: "-2deg" },
-    { id: 8, type: "video", src: "/videos/memory_video2.mp4", caption: "Late Night Chai Vibe", rotation: "1deg" }
+    { id: 1, type: "image", src: "/images/memory_class.jpg", caption: "The First Class" },
+    { id: 2, type: "image", src: "/images/memory_room235.jpg", caption: "Room 235 Shenanigans" },
+    { id: 3, type: "image", src: "/images/memory_quetta.jpg", caption: "Quetta Chai Therapy" },
+    { id: 4, type: "image", src: "/images/memory_trip.jpg", caption: "Endless Hostel Parties" },
+    { id: 5, type: "image", src: "/images/memory_exam.jpg", caption: "Exam Prep Nightmares" },
+    { id: 6, type: "image", src: "/images/memory_lastclass.jpg", caption: "The Final Class" },
+    { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 235 Karaoke Jam" },
+    { id: 8, type: "video", src: "/videos/memory_video2.mp4", caption: "Late Night Chai Vibe" },
+    { id: 9, type: "image", src: "/images/memory_sports.jpg", caption: "Hostel Sports Day" },
+    { id: 10, type: "video", src: "/videos/memory_video3.mp4", caption: "Phone Hiding Prank" },
+    { id: 11, type: "image", src: "/images/memory_mess.jpg", caption: "JBH Mess Gatherings" },
+    { id: 12, type: "video", src: "/videos/memory_video4.mp4", caption: "Corridor Football Chaos" },
+    { id: 13, type: "image", src: "/images/memory_mehran.jpg", caption: "Mehran Squeeze Outing" },
+    { id: 14, type: "image", src: "/images/memory_lab.jpg", caption: "Late Night Coding Sessions" },
+    { id: 15, type: "video", src: "/videos/memory_video5.mp4", caption: "FYP Submission Celebration" },
+    { id: 16, type: "image", src: "/images/memory_room111.jpg", caption: "Room 111 Final Vibe" }
   ];
 
   const targetRef = useRef(null);
   const timelineRef = useRef(null);
+  const canvasRef = useRef(null);
+  const isDraggingRef = useRef(false);
+
   const [scrollLimit, setScrollLimit] = useState(2400);
+  const [cards, setCards] = useState([]);
+  const [viewMode, setViewMode] = useState("scatter"); // "scatter" or "grid"
+  const [activeMedia, setActiveMedia] = useState(null); // for lightbox popup
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
 
+  // Calculate layout offset values
   useEffect(() => {
     const handleResize = () => {
       if (timelineRef.current) {
@@ -48,6 +63,72 @@ export default function StoryPage({ onBackClick }) {
       clearTimeout(timer);
     };
   }, []);
+
+  // Initialize random scatter coordinates for the Polaroids
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+    const initialized = mediaMemories.map((item, idx) => {
+      // Pick random coordinates within bounds to avoid clustering
+      const randomX = Math.random() * (isMobile ? 65 : 82) + 2; // 2% to 84%
+      const randomY = Math.random() * (isMobile ? 75 : 80) + 5; // 5% to 85%
+      const randomRotate = Math.random() * 30 - 15; // -15deg to 15deg
+      return {
+        ...item,
+        x: randomX,
+        y: randomY,
+        rotate: randomRotate,
+        zIndex: idx + 1
+      };
+    });
+    setCards(initialized);
+  }, []);
+
+  // Shuffle board items randomly
+  const handleScatter = () => {
+    setViewMode("scatter");
+    const isMobile = window.innerWidth <= 768;
+    setCards(prev => prev.map((c) => ({
+      ...c,
+      x: Math.random() * (isMobile ? 65 : 82) + 2,
+      y: Math.random() * (isMobile ? 75 : 80) + 5,
+      rotate: Math.random() * 30 - 15
+    })));
+  };
+
+  // Organize items in a grid layout
+  const handleGrid = () => {
+    setViewMode("grid");
+    const isMobile = window.innerWidth <= 768;
+    const cols = isMobile ? 3 : 5; // 3 columns on mobile, 5 on desktop
+    const colWidth = isMobile ? 30 : 18;
+    const rowHeight = isMobile ? 14 : 22; // vertical spacing percentage
+    const topMargin = isMobile ? 5 : 6;
+
+    setCards(prev => prev.map((c, idx) => {
+      const col = idx % cols;
+      const row = Math.floor(idx / cols);
+      return {
+        ...c,
+        x: col * colWidth + (isMobile ? 5 : 8),
+        y: row * rowHeight + topMargin,
+        rotate: 0
+      };
+    }));
+  };
+
+  // Push clicked card to top zIndex so it lays over other cards
+  const bringToFront = (id) => {
+    setCards(prev => {
+      const maxZ = Math.max(...prev.map(c => c.zIndex), 0);
+      return prev.map(c => c.id === id ? { ...c, zIndex: maxZ + 1 } : c);
+    });
+  };
+
+  const handleCardClick = (media) => {
+    if (isDraggingRef.current) return;
+    bringToFront(media.id);
+    setActiveMedia(media);
+  };
   
   // On desktop, scroll horizontally. Mobile will handle it differently via CSS.
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollLimit]);
@@ -143,18 +224,61 @@ export default function StoryPage({ onBackClick }) {
       </div>
 
       {/* Memory Board Section */}
-      <section className="media-grid-section">
+      <section className="media-grid-section" style={{ overflow: "visible" }}>
         <h2 className="media-grid-title">The Memory Board</h2>
-        <p style={{ color: "var(--text-light)", marginBottom: "40px", fontSize: "1.1rem" }}>
-          Polaroids and clips from our archives. (Drop your real photos and video files in the project folder to replace placeholders!)
+        <p style={{ color: "var(--text-light)", marginBottom: "15px", fontSize: "1.1rem" }}>
+          An interactive scatter board of our hosteling days. Grab and drag photos around, throw them, or click to view/play in fullscreen! (Supports unlimited photos and videos).
         </p>
 
-        <div className="media-grid">
-          {mediaMemories.map((media) => (
-            <div 
+        {/* Board Controls */}
+        <div className="board-controls">
+          <button 
+            onClick={handleScatter} 
+            className={`btn-gta ${viewMode === "scatter" ? "btn-active" : ""}`}
+            style={{ fontSize: "0.8rem", padding: "8px 16px" }}
+          >
+            <Shuffle size={14} style={{ marginRight: "6px", display: "inline-block", verticalAlign: "middle" }} /> Scatter Deck
+          </button>
+          <button 
+            onClick={handleGrid} 
+            className={`btn-gta ${viewMode === "grid" ? "btn-active" : ""}`}
+            style={{ fontSize: "0.8rem", padding: "8px 16px" }}
+          >
+            <Grid size={14} style={{ marginRight: "6px", display: "inline-block", verticalAlign: "middle" }} /> Clean Grid
+          </button>
+        </div>
+
+        {/* 3D Scatter Canvas */}
+        <div ref={canvasRef} className="polaroid-scatter-canvas">
+          {cards.map((media) => (
+            <motion.div 
               key={media.id} 
-              className="polaroid-card" 
-              style={{ "--rotation": media.rotation }}
+              className="polaroid-card scatter-card" 
+              style={{ 
+                left: `${media.x}%`, 
+                top: `${media.y}%`, 
+                zIndex: media.zIndex
+              }}
+              animate={{ 
+                rotate: media.rotate,
+                scale: viewMode === "grid" ? 0.95 : 1
+              }}
+              transition={{ type: "spring", stiffness: 85, damping: 14 }}
+              drag
+              dragConstraints={canvasRef}
+              dragElastic={0.05}
+              dragMomentum={true}
+              whileDrag={{ scale: 1.08, zIndex: 9999 }}
+              onDragStart={() => {
+                isDraggingRef.current = true;
+                bringToFront(media.id);
+              }}
+              onDragEnd={() => {
+                setTimeout(() => {
+                  isDraggingRef.current = false;
+                }, 50);
+              }}
+              onClick={() => handleCardClick(media)}
             >
               <div className="polaroid-media-wrapper">
                 {media.type === "image" ? (
@@ -168,17 +292,40 @@ export default function StoryPage({ onBackClick }) {
                     }}
                   />
                 ) : (
-                  <video 
-                    src={media.src} 
-                    className="polaroid-video" 
-                    controls 
-                    muted
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
+                  <div className="polaroid-video-container" style={{ width: "100%", height: "100%", position: "relative" }}>
+                    <video 
+                      src={media.src} 
+                      className="polaroid-video" 
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      muted
+                      loop
+                      playsInline
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentNode.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    {/* Retro VHS play indicator */}
+                    <div style={{
+                      position: "absolute",
+                      bottom: "10px",
+                      left: "10px",
+                      background: "rgba(0,0,0,0.6)",
+                      color: "#00ff41",
+                      fontFamily: "monospace",
+                      fontSize: "0.65rem",
+                      padding: "2px 6px",
+                      borderRadius: "2px",
+                      letterSpacing: "1px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px"
+                    }}>
+                      <Video size={10} /> PLAY
+                    </div>
+                  </div>
                 )}
+
                 {/* Fallback Graphic Overlay */}
                 <div style={{
                   display: 'none',
@@ -190,14 +337,14 @@ export default function StoryPage({ onBackClick }) {
                   justifyContent: 'center',
                   color: 'rgba(255,255,255,0.2)'
                 }}>
-                  {media.type === "image" ? <ImageIcon size={48} /> : <Video size={48} />}
-                  <span style={{ fontSize: "0.8rem", marginTop: "12px", letterSpacing: "1px", textTransform: "uppercase" }}>
+                  {media.type === "image" ? <ImageIcon size={32} /> : <Video size={32} />}
+                  <span style={{ fontSize: "0.6rem", marginTop: "8px", letterSpacing: "1px", textTransform: "uppercase" }}>
                     {media.type} FILE
                   </span>
                 </div>
               </div>
               <span className="polaroid-caption">{media.caption}</span>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -217,6 +364,85 @@ export default function StoryPage({ onBackClick }) {
 
         <p className="footer-sub">BSA GROUP PORTAL &bull; EST. FIRST YEAR</p>
       </footer>
+
+      {/* Lightbox Modal Overlay */}
+      <AnimatePresence>
+        {activeMedia && (
+          <motion.div 
+            className="lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveMedia(null)}
+          >
+            <motion.div 
+              className="lightbox-content"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="lightbox-close" onClick={() => setActiveMedia(null)}>
+                <X size={18} /> CLOSE
+              </button>
+
+              {activeMedia.type === "image" ? (
+                <img 
+                  src={activeMedia.src} 
+                  alt={activeMedia.caption} 
+                  className="lightbox-media"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : (
+                <video 
+                  src={activeMedia.src} 
+                  className="lightbox-media"
+                  controls 
+                  autoPlay
+                  loop
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              )}
+
+              {/* Fallback Graphic Overlay for lightbox */}
+              <div style={{
+                display: 'none',
+                width: '100%',
+                height: '400px',
+                backgroundColor: '#1a1a24',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'rgba(255,255,255,0.2)',
+                borderRadius: "4px"
+              }}>
+                {activeMedia.type === "image" ? <ImageIcon size={64} /> : <Video size={64} />}
+                <span style={{ fontSize: "0.8rem", marginTop: "12px", letterSpacing: "1px", textTransform: "uppercase" }}>
+                  {activeMedia.type} PLACEHOLDER FILE
+                </span>
+              </div>
+
+              <h3 style={{ 
+                marginTop: "20px", 
+                fontFamily: "var(--font-title)", 
+                letterSpacing: "2px", 
+                fontSize: "1.2rem", 
+                color: "#fff",
+                textTransform: "uppercase"
+              }}>
+                {activeMedia.caption}
+              </h3>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
