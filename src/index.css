@@ -798,12 +798,28 @@ button {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .hero-grid, .member-slide-container, .member-slide-container.layout-right {
+  .hero-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .member-slide-container, .member-slide-container.layout-right {
+    display: block;
+    background-color: inherit;
+  }
   .member-slide-container.layout-right {
     direction: ltr;
+  }
+  .member-img-column {
+    position: sticky;
+    top: 90px;
+    z-index: 1;
+    margin-bottom: 30px;
+  }
+  .member-content-column {
+    position: relative;
+    z-index: 2;
+    background-color: inherit;
+    padding-top: 20px;
   }
 }
 

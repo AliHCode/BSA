@@ -315,8 +315,9 @@ export default function ConfessionsPage() {
           color: #00ff41;
           outline: none;
           font-family: inherit;
-          font-size: 1rem;
+          font-size: 16px; /* Prevents iOS Safari zoom */
           flex: 1;
+          min-width: 0;
           margin-left: 8px;
         }
         .matrix-overlay {
@@ -357,6 +358,14 @@ export default function ConfessionsPage() {
           overflow: hidden;
           pointer-events: none;
           top: 0; left: 0;
+        }
+        @media (max-width: 768px) {
+          .hacker-terminal {
+            width: 100%;
+            padding: 10px;
+            margin: 0;
+            border-radius: 4px;
+          }
         }
       `}} />
 

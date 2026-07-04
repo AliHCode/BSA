@@ -49,7 +49,7 @@ export default function StoryPage({ onBackClick }) {
           const firstCenter = firstNode.offsetLeft + firstNode.offsetWidth / 2;
           const lastCenter = lastNode.offsetLeft + lastNode.offsetWidth / 2;
           const isMobile = window.innerWidth <= 768;
-          setScrollLimit(lastCenter - firstCenter + (isMobile ? 120 : 0));
+          setScrollLimit(lastCenter - firstCenter + (isMobile ? 350 : 0));
         }
       }
     };
