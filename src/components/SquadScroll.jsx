@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BookOpen } from "lucide-react";
 import { membersData } from "../data/members";
 import { motion, useScroll, useTransform } from "framer-motion";
+import QuotesChat from "./QuotesChat";
 
 export default function SquadScroll({ onStoryClick }) {
   const [orderedMembers, setOrderedMembers] = useState([]);
@@ -133,6 +134,37 @@ export default function SquadScroll({ onStoryClick }) {
           </section>
         );
       })}
+
+      {/* Option 2: Parallax Video Mask */}
+      <section className="squad-section video-mask-section">
+         <div className="video-mask-sticky">
+            <video 
+              className="video-mask-bg" 
+              autoPlay muted loop playsInline
+            >
+               <source src="/videos/bsa-montage.mp4" type="video/mp4" />
+            </video>
+            <div className="video-mask-overlay">
+               <motion.h1 
+                  className="video-mask-text"
+                  initial={{ scale: 0.8 }}
+                  whileInView={{ scale: 1.2 }}
+                  viewport={{ once: false, amount: 0.1 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+               >
+                 BSA
+               </motion.h1>
+            </div>
+         </div>
+      </section>
+
+      {/* Option B: Quotes Chat */}
+      <section className="squad-section quotes-globe-section">
+         <div className="quotes-globe-container">
+            <h2 className="quotes-globe-title">ECHOES OF THE SQUAD</h2>
+            <QuotesChat />
+         </div>
+      </section>
 
       {/* Outro section */}
       <section 

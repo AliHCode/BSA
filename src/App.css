@@ -576,3 +576,255 @@
     gap: 15px;
   }
 }
+
+/* WOW Factor Additions: Option 2 (Video Mask) & Option 3 (Quotes Globe) */
+
+/* Option 2: Parallax Video Mask */
+.video-mask-section {
+  position: relative;
+  height: 200vh;
+  background: var(--bg-dark);
+}
+
+.video-mask-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.video-mask-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.video-mask-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  mix-blend-mode: multiply;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.video-mask-text {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: clamp(15rem, 35vw, 40rem);
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -2vw;
+  text-align: center;
+}
+
+/* Option 3: Quotes Globe */
+.quotes-globe-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-dark);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 20px;
+}
+
+.quotes-globe-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quotes-globe-title {
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--text-light);
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.quotes-globe {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.quote-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  pointer-events: none;
+  font-size: clamp(0.9rem, 2vw, 1.8rem);
+  transition: color 0.3s;
+}
+
+@media (max-width: 768px) {
+  .quotes-globe {
+    height: 400px;
+  }
+}
+
+
+/* Infinite Marquee Styles (Replaces Quotes Globe) */
+.marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 2rem 0;
+  background: var(--bg-dark);
+}
+
+.marquee-row {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+}
+
+.scroll-left {
+  animation: marquee-left 40s linear infinite;
+}
+
+.scroll-right {
+  animation: marquee-right 40s linear infinite;
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-item {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: var(--text-white);
+  margin: 0 1.5rem;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  cursor: default;
+}
+
+.marquee-item:hover {
+  color: var(--color-accent);
+}
+
+.marquee-item-outline {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--color-accent);
+  margin: 0 1.5rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.marquee-item-outline:hover {
+  color: var(--color-accent);
+  -webkit-text-stroke: 2px transparent;
+}
+
+/* Option 2 / B: Quotes Chat Bubbles */
+.quotes-chat-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+
+.chat-bubble-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.chat-left {
+  justify-content: flex-start;
+}
+
+.chat-right {
+  justify-content: flex-end;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 16px 24px;
+  border-radius: 24px;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  line-height: 1.5;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.bubble-received {
+  background: #2a2a36;
+  color: #fff;
+  border-bottom-left-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bubble-sent {
+  background: var(--color-accent);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+.chat-text {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
