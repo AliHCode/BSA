@@ -34,7 +34,7 @@ His knowledge of anime is on another level. When Shah G and Haseeb start discuss
     tagline: "The ultimate target of all pranks: the positive energy of BSA without whom our room feels empty.",
     image: "/images/Abdullah.jpeg",
     accentColor: "#ff2a5f",
-    letter: `AMB is the group's most beloved and permanent target for all pranks. He is the type of guy whom everyone teases constantly, but Abdullah never minds. In fact, BSA loves him the absolute most. Jab wo room mein nahi hota, to sab kuch suna suna lagta hai because of the amazing energy he brings whenever he is with us. Every single shararat in our hostel starts with Abdullah.
+    letter: `AMB is the group's most beloved and permanent target for all pranks. He is the type of guy whom everyone teases constantly, but Abdullah never minds. In fact, BSA loves him the absolute most. Jab wo room mein nahi hota, to sab kuch suna suna lagta hai because of the amazing energy he brings whenever he is with us. Every single tantri in our hostel starts with Abdullah.
 
 Abdullah ke sath ek alag hi comfort hai—you can literally share anything with him. He is highly studious but still carries that perfect backbencher energy that fits right in.
 
@@ -48,7 +48,7 @@ Who can forget his legendary birthday celebration? That was the exact moment BSA
     tagline: "BSA's master chef, music DJ, and chaos mastermind: hostel ke har rolay aur plan mein top list pe rehne wala.",
     image: "/images/Qadeer.jpeg",
     accentColor: "#ff2a5f",
-    letter: `Grenade/Summit is the funniest guy in our group, and we call him Grenade for a reason! Peak chaotic energy aur high-level pranking plans iske signature hain. Hostel mein har tarah ki shararat karne ke liye ye hamesha sabse aage hota hai. Jab bhi university mein koi rola hota hai, to pata nahi kyun sabse pehle Qadeer ka naam hi top list pe aata hai!
+    letter: `Grenade/Summit is the funniest guy in our group, and we call him Grenade for a reason! Peak chaotic energy aur high-level pranking plans iske signature hain. Hostel mein har tarah ki tantri karne ke liye ye hamesha sabse aage hota hai. Jab bhi university mein koi rola hota hai, to pata nahi kyun sabse pehle Qadeer ka naam hi top list pe aata hai!
 
 But chaos ke ilawa, Qadeer is also our official Master Chef. He is a really good cook who makes an amazing Karahi. He is also the squad's official music DJ who handles the songs and vibe whenever we gather. 
 
@@ -76,7 +76,7 @@ He is the quiet pillar of BSA. He never gets into arguments or behaves rudely wi
     tagline: "Owner of the legendary red Mehran and the funniest talker of the group, always ready for any wild plan.",
     image: "/images/Hammadkhalil.jpeg",
     accentColor: "#ff2a5f",
-    letter: `Raja G is the ultimate adventure enabler of the squad and the owner of the legendary red Suzuki Mehran. Zindagi ki har shararat aur plan mein ye sabse aage hota hai. He has a simple rule: never say no to any adventure, no matter how stupid or crazy it sounds. He is always ready for the chaos BSA is famous for.
+    letter: `Raja G is the ultimate adventure enabler of the squad and the owner of the legendary red Suzuki Mehran. Zindagi ki har tantri aur plan mein ye sabse aage hota hai. He has a simple rule: never say no to any adventure, no matter how stupid or crazy it sounds. He is always ready for the chaos BSA is famous for.
 
 In terms of how he speaks, Raja G is hands down the funniest guy in our group. His talking style and jokes can make anyone laugh instantly. 
 

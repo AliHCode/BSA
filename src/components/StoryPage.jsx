@@ -184,7 +184,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Ali Hall & The Circle Grows</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
                 <p>
-                  Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari shararat ki gayi!
+                  Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari tantri ki gayi!
                 </p>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Room 235 & The Red Mehran</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>BSA Formation & Peak Pranks</p>
                 <p>
-                  Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak shararaton ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!
+                  Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak tantriayan ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Room 111 & The Final Chapter</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
                 <p>
-                  Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta shararaton ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family.
+                  Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta tantriayan ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family.
                 </p>
               </div>
             </div>
