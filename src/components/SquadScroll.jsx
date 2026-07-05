@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BookOpen } from "lucide-react";
 import { membersData } from "../data/members";
 import { motion, useScroll, useTransform } from "framer-motion";
-import QuotesChat from "./QuotesChat";
+import QuotesStrobe from "./QuotesStrobe";
 
 export default function SquadScroll({ onStoryClick }) {
   const [orderedMembers, setOrderedMembers] = useState([]);
@@ -158,13 +158,8 @@ export default function SquadScroll({ onStoryClick }) {
          </div>
       </section>
 
-      {/* Option B: Quotes Chat */}
-      <section className="squad-section quotes-globe-section">
-         <div className="quotes-globe-container">
-            <h2 className="quotes-globe-title">ECHOES OF THE SQUAD</h2>
-            <QuotesChat />
-         </div>
-      </section>
+      {/* Option 1: Quotes Strobe */}
+      <QuotesStrobe />
 
       {/* Outro section */}
       <section 

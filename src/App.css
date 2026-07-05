@@ -828,3 +828,48 @@
   letter-spacing: 0.5px;
 }
 
+
+/* Option 1: Quotes Strobe (Cinematic Flash) */
+.quotes-strobe-container {
+  height: 500vh; /* Plenty of scrolling space for 17 quotes */
+  background: #000;
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.quotes-strobe-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.strobe-quote {
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+  width: 90%;
+  margin: 0;
+  will-change: opacity, transform;
+}
+
+.strobe-accent {
+  color: var(--color-accent);
+  text-shadow: 0 0 40px rgba(255, 42, 95, 0.4);
+}
+
+.strobe-white {
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
