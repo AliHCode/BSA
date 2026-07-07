@@ -2,101 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft, Grid, Shuffle, X, Maximize2 } from "lucide-react";
 
-const milestones = [
-  {
-    year: "YEAR 1 (SEP 2022)",
-    icon: Calendar,
-    color: "var(--neon-cyan)",
-    title: "First Steps & The Core Group",
-    subtitle: "JBH Hall",
-    text: "September 2022 mein university life shuru hui. JBH Hall ke room 221 aur aamne-samne ke rooms mein hostelites ne dosti ki shuruaat ki. Shuru mein random groups ban rahe thay, but Taqi (Shah G) aur doston ki frequency match hone se group ka aaghaz hua. Pehlay saal ki late-night discussions aur class skips ne dosti ko mazboot kiya."
-  },
-  {
-    year: "YEAR 2 (2023 - 2024)",
-    icon: Compass,
-    color: "var(--neon-pink)",
-    title: "Ali Hall & The Circle Grows",
-    subtitle: "The Private Mess Gatherings",
-    text: "Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari tantri ki gayi!"
-  },
-  {
-    year: "YEAR 3 (2024 - 2025)",
-    icon: Coffee,
-    color: "var(--neon-gold)",
-    title: "Room 235 & The Red Mehran",
-    subtitle: "BSA Formation & Peak Pranks",
-    text: "Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak tantriayan ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!"
-  },
-  {
-    year: "YEAR 4 (THE FINALE)",
-    icon: GraduationCap,
-    color: "var(--text-white)",
-    title: "Room 111 & The Final Chapter",
-    subtitle: "June 2026 - Present",
-    text: "Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta tantriayan ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family."
-  }
-];
-
-function TimeMachineNode({ milestone, index, total, scrollYProgress }) {
-  const Icon = milestone.icon;
-  const peak = (index + 0.5) / total;
-  const start = peak - 0.25;
-  const pass = peak + 0.15;
-  
-  const scale = useTransform(scrollYProgress, (v) => {
-    if (v < start) return 0;
-    if (v < peak) return (v - start) / (peak - start); // 0 to 1
-    if (v < pass) return 1 + 3 * ((v - peak) / (pass - peak)); // 1 to 4
-    return 4;
-  });
-  
-  const opacity = useTransform(scrollYProgress, (v) => {
-    if (v < start) return 0;
-    if (v < peak) return (v - start) / (peak - start); // 0 to 1
-    if (v < pass) return 1 - ((v - peak) / (pass - peak)); // 1 to 0
-    return 0;
-  });
-  
-  const filter = useTransform(scrollYProgress, (v) => {
-    if (v < start) return "blur(20px)";
-    if (v < peak) return `blur(${20 - 20 * ((v - start) / (peak - start))}px)`;
-    if (v < pass) return `blur(${20 * ((v - peak) / (pass - peak))}px)`;
-    return "blur(20px)";
-  });
-
-  return (
-    <motion.div
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        x: "-50%",
-        y: "-50%",
-        scale,
-        opacity,
-        filter,
-        zIndex: total - index,
-        width: "90%",
-        maxWidth: "600px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        pointerEvents: "none"
-      }}
-    >
-      <div className="timeline-badge" style={{ "--badge-color": milestone.color, position: "relative", marginBottom: "20px", pointerEvents: "auto" }}>
-        <Icon size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
-        {milestone.year}
-      </div>
-      <div className="timeline-card glass-panel" style={{ "--badge-color": milestone.color, width: "100%", pointerEvents: "auto" }}>
-        <h3 style={{ fontSize: "1.8rem", textAlign: "center", marginBottom: "5px" }}>{milestone.title}</h3>
-        <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "15px", textAlign: "center" }}>{milestone.subtitle}</p>
-        <p style={{ textAlign: "justify", lineHeight: "1.6" }}>{milestone.text}</p>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function StoryPage({ onBackClick }) {
   
   // Array of memories for the Polaroid Grid / 3D Scatter Board
@@ -247,19 +152,74 @@ export default function StoryPage({ onBackClick }) {
         <p className="story-subtitle">The four-year timeline of the BSA Crew</p>
       </header>
 
-      {/* Z-Axis Time Machine Tunnel */}
-      <div ref={targetRef} className="time-machine-wrapper" style={{ height: "400vh", position: "relative" }}>
-        <div className="time-machine-sticky" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", perspective: "1000px" }}>
-          {/* Subtle background particles or depth effect could go here */}
-          {milestones.map((milestone, index) => (
-            <TimeMachineNode
-              key={index}
-              milestone={milestone}
-              index={index}
-              total={milestones.length}
-              scrollYProgress={scrollYProgress}
-            />
-          ))}
+      {/* Horizontal Museum Timeline */}
+      <div ref={targetRef} className="museum-scroll-wrapper">
+        <div className="museum-sticky-container">
+          <motion.div ref={timelineRef} style={{ x }} className="museum-horizontal-timeline">
+            
+            <div className="timeline-horizontal-line" />
+
+            {/* Milestone 1 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-cyan)", top: "-40px" }}>
+                <Calendar size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 1 (SEP 2022)
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-cyan)" }}>
+                <h3>First Steps & The Core Group</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>JBH Hall</p>
+                <p>
+                  September 2022 mein university life shuru hui. JBH Hall ke room 221 aur aamne-samne ke rooms mein hostelites ne dosti ki shuruaat ki. Shuru mein random groups ban rahe thay, but Taqi (Shah G) aur doston ki frequency match hone se group ka aaghaz hua. Pehlay saal ki late-night discussions aur class skips ne dosti ko mazboot kiya.
+                </p>
+              </div>
+            </div>
+
+            {/* Milestone 2 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-pink)", bottom: "-40px", top: "auto" }}>
+                <Compass size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 2 (2023 - 2024)
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-pink)" }}>
+                <h3>Ali Hall & The Circle Grows</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
+                <p>
+                  Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari tantri ki gayi!
+                </p>
+              </div>
+            </div>
+
+            {/* Milestone 3 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--neon-gold)", top: "-40px" }}>
+                <Coffee size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 3 (2024 - 2025)
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-gold)" }}>
+                <h3>Room 235 & The Red Mehran</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>BSA Formation & Peak Pranks</p>
+                <p>
+                  Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak tantriayan ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!
+                </p>
+              </div>
+            </div>
+
+            {/* Milestone 4 */}
+            <div className="museum-node">
+              <div className="timeline-badge" style={{ "--badge-color": "var(--text-white)", bottom: "-40px", top: "auto" }}>
+                <GraduationCap size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                YEAR 4 (THE FINALE)
+              </div>
+              <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--text-white)" }}>
+                <h3>Room 111 & The Final Chapter</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
+                <p>
+                  Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta tantriayan ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family.
+                </p>
+              </div>
+            </div>
+
+          </motion.div>
         </div>
       </div>
 
