@@ -38,7 +38,7 @@ His knowledge of anime is on another level. When Shah G and Haseeb start discuss
 
 Abdullah ke sath ek alag hi comfort hai—you can literally share anything with him. He is highly studious but still carries that perfect backbencher energy that fits right in.
 
-Who can forget his legendary birthday celebration? That was the exact moment BSA was officially created and we all got together. After dinner, we threw him into the pool and stole his clothes when he went to the washroom! Still, he took it like a champion and smiled through it all. He is truly the positive energy and heart of our squad.`
+Who can forget his legendary birthday celebration? That was the exact moment BSA was officially created and we all got together. After dinner, we threw him into the Dhobhi ghaat and stole his clothes when he went to the washroom! Still, he took it like a champion and smiled through it all. He is truly the positive energy and heart of our squad.`
   },
   {
     id: "qadeer",

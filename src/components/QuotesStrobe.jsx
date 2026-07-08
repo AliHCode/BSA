@@ -15,7 +15,7 @@ const quotes = [
   "Aap nay acha nahi kiya",
   "Pathhhiiiiiiiiii",
   "agar apnay baap ka hai toh Ali pey phaink k dikha",
-  "Bhatti saab ki kr rahay ho",
+  "Mein Bhatti hun",
   "Summit class ka topper",
   "Mangoooool",
   "Mature ho gaya hai"

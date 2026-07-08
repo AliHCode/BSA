@@ -23,10 +23,10 @@ export default function App() {
 
     if (!isTouch) {
       lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.5, // Reduced slightly to balance the cinematic feel with responsiveness
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        wheelMultiplier: 1,
+        wheelMultiplier: 1, // Native sensitivity
       });
 
       function raf(time) {

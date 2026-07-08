@@ -166,10 +166,10 @@ export default function StoryPage({ onBackClick }) {
                 YEAR 1 (SEP 2022)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-cyan)" }}>
-                <h3>First Steps & The Core Group</h3>
-                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>JBH Hall</p>
+                <h3>The Unknown Origins</h3>
+                <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Calm Before The Storm</p>
                 <p>
-                  September 2022 mein university life shuru hui. JBH Hall ke room 221 aur aamne-samne ke rooms mein hostelites ne dosti ki shuruaat ki. Shuru mein random groups ban rahe thay, but Taqi (Shah G) aur doston ki frequency match hone se group ka aaghaz hua. Pehlay saal ki late-night discussions aur class skips ne dosti ko mazboot kiya.
+                  Shuru mein humara aapas mein koi connection nahi tha. Hum sirf strangers thay jo ek hi university mein parh rahe thay, alag alag logon ke sath uthna baithna tha. Kisi ko andaza nahi tha ke kuch waqt baad yahi random log mil kar ek aisi vibe create karenge jisay poori university hamesha yaad rakhegi.
                 </p>
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Ali Hall & The Circle Grows</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
                 <p>
-                  Second year mein boys Ali Hall shift hue. Private mess mein rozana baithte baithte Q-Hall ke baki doston—Qadeer (Grenade), Abdullah (AMB), Hamad Khalil, Hamad Abrar, Haseeb, aur Haris—se connection bana aur Bismillah Student Association (BSA) officially ek group ban kar ubhri. 21 April ko Savour Foods Wah Cantt mein Abdullah ki birthday par usko pool mein phenk kar aur uske kapde chupa kar pehli bari tantri ki gayi!
+                  Second year tak aate aate humara circle expand hua aur private mess humara ultimate hangout spot ban gaya. Wahan Taqi, Qadeer, Abdullah, dono Hamad, Haris aur Haseeb ke sath mil kar jo shugal lagta tha, usne humari power aur vibe ko multiply kar diya. Yehi wo waqt tha jab "Bismillah Student Association (BSA)" ka title officially wujood mein aaya. Hum sirf dost nahi rahe thay, hum ek brotherhood ban chuke thay. Har choti baat par party, pranks, aur ek doosre ki taang kheenchna humari pehchaan ban gayi.
                 </p>
               </div>
             </div>
@@ -196,10 +196,10 @@ export default function StoryPage({ onBackClick }) {
                 YEAR 3 (2024 - 2025)
               </div>
               <div className="timeline-card glass-panel" style={{ "--badge-color": "var(--neon-gold)" }}>
-                <h3>Room 235 & The Red Mehran</h3>
+                <h3>Room 235</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>BSA Formation & Peak Pranks</p>
                 <p>
-                  Third year mein Room 235 shift hue jo BSA ka main headquarters ban gaya. Day scholars Haris, Haseeb, aur Hamad Khalil bhi sara din hostel mein hi rehte thay. Peak tantriayan ka saal tha: juniors ko room mein la kar unke sath shugal lagana, rooms pe patthar marna, day scholars ke phones chupana taake wo ghar na ja sakein, aur Hamad Khalil ki laal Mehran mein 8 doston ka adjust ho kar road trips par nikal jana!
+                  BSA ne humari university life ko boring se nikal kar ek movie mein badal diya. Room 235 humara undisputed headquarters tha jahan day-scholars aur hostelites ka farq khatam ho gaya. Hamad Khalil ki iconic laal Mehran par aadhi raat ko unplanned long drives par nikal jana, seniors/juniors ke sath shugal lagana, aur doston ke phones chupa kar unko waheen rok lena—ye saari memories humari life ka sabse khoobsurat hissa ban chuki hain. BSA ka impact ye tha ke koi ek din bhi stress mein nahi guzra.
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Room 111 & The Final Chapter</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>June 2026 - Present</p>
                 <p>
-                  Final year mein sab dost Room 111 mein stay kar rahe hain. 2 July 2026 ko final project (FYP) presentation hai, aur 15 August tak summer session chalega. Char saal ki hostel life aur unki shugufta tantriayan ke baad ab ye group graduation aur aglay safar ke liye tayyar hai, locked in as a family.
+                  Degree mukammal ho chuki hai, FYP done, aur ab hum Room 111 bhi chhor chuke hain. Lekin udhar guzari hui har raat aur wo sari yaadein hamesha zinda rahengi. In char saalon ne humein sirf degree nahi di, balke ek aisi family di hai jo har mushkil mein sath khari hogi. Hostel ki deewarein choot gayi hain, lekin BSA ka bond aur humari unhinged memories hamesha humare sath rahengi. The era of BSA never ends.
                 </p>
               </div>
             </div>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BookOpen } from "lucide-react";
 import { membersData } from "../data/members";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import QuotesStrobe from "./QuotesStrobe";
 
 export default function SquadScroll({ onStoryClick }) {
   const [orderedMembers, setOrderedMembers] = useState([]);
+  const videoSectionRef = useRef(null);
+  const isVideoInView = useInView(videoSectionRef, { amount: 0.1, once: false });
 
   // Shuffle squad members on mount, keeping Ali Hussnain (Meetha) first
   useEffect(() => {
@@ -135,24 +137,42 @@ export default function SquadScroll({ onStoryClick }) {
         );
       })}
 
-      {/* Option 2: Parallax Video Mask */}
-      <section className="squad-section video-mask-section">
-         <div className="video-mask-sticky">
-            <video 
-              className="video-mask-bg" 
-              autoPlay muted loop playsInline
-            >
-               <source src="/videos/bsa-montage.mp4" type="video/mp4" />
-            </video>
-            <div className="video-mask-overlay">
-               <motion.h1 
-                  className="video-mask-text"
-                  initial={{ scale: 0.8 }}
-                  whileInView={{ scale: 1.2 }}
-                  viewport={{ once: false, amount: 0.1 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
+      {/* Option 2: Split Layout (Text Left, Video Right) */}
+      <section className="video-split-section" style={{ margin: 0, padding: 0, border: 'none', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
+         <div className="video-split-container">
+            <div className="video-split-video-col">
+               <motion.video 
+                 className="video-split-video" 
+                 autoPlay muted loop playsInline
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 whileInView={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 1 }}
+                 viewport={{ once: false, amount: 0.3 }}
                >
-                 BSA
+                  <source src="/videos/bsa-montage.mp4" type="video/mp4" />
+               </motion.video>
+            </div>
+            <div className="video-split-text-col">
+               <motion.h1 
+                  className="video-split-text"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false, amount: 0.5 }}
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.2 } }
+                  }}
+               >
+                 {["B", "S", "A"].map((letter, i) => (
+                   <motion.span 
+                     key={i}
+                     variants={{
+                       hidden: { opacity: 0, x: 50 },
+                       visible: { opacity: 1, x: 0, transition: { type: "spring", damping: 12, stiffness: 100 } }
+                     }}
+                   >
+                     {letter}
+                   </motion.span>
+                 ))}
                </motion.h1>
             </div>
          </div>
