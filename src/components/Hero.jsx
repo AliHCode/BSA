@@ -75,21 +75,29 @@ export default function Hero({ onStartClick }) {
   };
 
   useEffect(() => {
+    let ticking = false;
+
     const handleOrientation = (e) => {
-      let { gamma, beta } = e;
-      if (gamma === null || beta === null) return;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          let { gamma, beta } = e;
+          if (gamma !== null && beta !== null) {
+            // Limit tilt to a readable range (-45 to 45 degrees)
+            gamma = Math.max(-45, Math.min(45, gamma));
+            // Assume resting phone angle is ~45deg front-to-back. Center it around 0.
+            beta = Math.max(0, Math.min(90, beta)) - 45;
 
-      // Limit tilt to a readable range (-45 to 45 degrees)
-      gamma = Math.max(-45, Math.min(45, gamma));
-      // Assume resting phone angle is ~45deg front-to-back. Center it around 0.
-      beta = Math.max(0, Math.min(90, beta)) - 45;
+            // Normalize to -1 to 1 to match mouse coordinate scaling
+            const x = gamma / 45;
+            const y = beta / 45;
 
-      // Normalize to -1 to 1 to match mouse coordinate scaling
-      const x = gamma / 45;
-      const y = beta / 45;
-
-      mouseX.set(x);
-      mouseY.set(y);
+            mouseX.set(x);
+            mouseY.set(y);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     if (window.DeviceOrientationEvent) {
