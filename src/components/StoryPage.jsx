@@ -4,6 +4,7 @@ import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, Ar
 import initialMemories from "../data/memories.json";
 
 export default function StoryPage({ onBackClick }) {
+  const isMobileScreen = typeof window !== 'undefined' && window.innerWidth <= 768;
   
   // Array of memories for the Polaroid Grid / 3D Scatter Board
   const [mediaMemories, setMediaMemories] = useState(initialMemories);
@@ -316,24 +317,23 @@ export default function StoryPage({ onBackClick }) {
               <div className="polaroid-media-wrapper">
                 {media.type === "image" ? (
                   <img 
-                    src={media.src} 
+                    src={`/thumbnails/${media.id}.webp`} 
                     alt={media.caption} 
                     className="polaroid-img"
+                    loading={isMobileScreen ? "lazy" : "eager"}
                     style={{ objectPosition: `${media.posX !== undefined ? media.posX : 50}% ${media.posY !== undefined ? media.posY : 50}%` }}
                     onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      e.target.src = media.src; // Fallback to original if thumbnail fails
                     }}
                   />
                 ) : (
                   <div className="polaroid-video-container" style={{ width: "100%", height: "100%", position: "relative" }}>
-                    <video 
-                      src={media.src} 
+                    <img 
+                      src={`/thumbnails/${media.id}.jpg`} 
+                      alt={media.caption} 
                       className="polaroid-video" 
+                      loading={isMobileScreen ? "lazy" : "eager"}
                       style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${media.posX !== undefined ? media.posX : 50}% ${media.posY !== undefined ? media.posY : 50}%` }}
-                      muted
-                      loop
-                      playsInline
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.parentNode.nextSibling.style.display = 'flex';
@@ -568,8 +568,8 @@ const CreditsSection = () => {
         <div className="credits-scroll-window">
           <motion.div
             className="credits-content"
-            initial={{ y: "100vh" }}
-            animate={isLocked || creditsFinished ? { y: "-100%" } : { y: "100vh" }}
+            initial={{ y: "0%" }}
+            animate={isLocked || creditsFinished ? { y: "-100%" } : { y: "0%" }}
             transition={{ duration: 90, ease: "linear" }}
             onAnimationComplete={() => {
               if (isLocked) {

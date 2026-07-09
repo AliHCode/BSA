@@ -333,7 +333,7 @@ const FeaturedStories = () => {
         </div>
         <div className="scrolling-text-container">
            <div className="story-text-card">
-              <AnimatedTitle text="Pen Day (Front View Only)" highlightWords={["(Front", "View", "Only)"]} />
+              <AnimatedTitle text="Pen Day (Front View Only)" highlightWords={["Pen", "Day", "(Front", "View", "Only)"]} />
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -354,7 +354,7 @@ const FeaturedStories = () => {
         </div>
         <div className="scrolling-text-container">
            <div className="story-text-card">
-              <AnimatedTitle text="The Last Stand" highlightWords={["Stand"]} />
+              <AnimatedTitle text="The Last Stand" highlightWords={["The", "Last", "Stand"]} />
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

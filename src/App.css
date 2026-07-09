@@ -1098,7 +1098,7 @@
 
 .credits-content {
   position: absolute;
-  top: 0;
+  top: 100%;
   width: 100%;
   text-align: center;
   color: #fff;
