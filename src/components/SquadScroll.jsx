@@ -88,20 +88,20 @@ export default function SquadScroll({ onStoryClick }) {
                 className="member-content-column"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.2 }}
                 variants={{
                   hidden: { opacity: 0 },
                   visible: {
                     opacity: 1,
-                    transition: { staggerChildren: 0.2 }
+                    transition: { staggerChildren: 0.1 }
                   }
                 }}
               >
                 <motion.div 
                   className="member-name-group"
                   variants={{
-                    hidden: { opacity: 0, x: isLayoutRight ? 50 : -50 },
-                    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
                   }}
                 >
                   <h2 className="member-name">{member.name}</h2>
@@ -112,8 +112,8 @@ export default function SquadScroll({ onStoryClick }) {
                   className="member-tagline"
                   style={{ borderLeftColor: member.accentColor }}
                   variants={{
-                    hidden: { opacity: 0, x: isLayoutRight ? 50 : -50 },
-                    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
                   }}
                 >
                   {member.tagline}
@@ -122,8 +122,8 @@ export default function SquadScroll({ onStoryClick }) {
                 <motion.div 
                   className="member-letter-card"
                   variants={{
-                    hidden: { opacity: 0, y: 50 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
                   }}
                 >
                   <p style={{ whiteSpace: "pre-line" }}>{member.letter}</p>
