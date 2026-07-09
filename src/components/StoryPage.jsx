@@ -500,8 +500,12 @@ const CreditsSection = () => {
   const [creditsFinished, setCreditsFinished] = useState(false);
 
   useEffect(() => {
-    if (!isLocked || creditsFinished) return;
+    if (!isLocked || creditsFinished) {
+      document.body.classList.remove("hide-nav");
+      return;
+    }
     
+    document.body.classList.add("hide-nav");
     if (window.lenis) window.lenis.stop();
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
@@ -535,6 +539,7 @@ const CreditsSection = () => {
     window.addEventListener("dblclick", handleDoubleClick);
 
     return () => {
+      document.body.classList.remove("hide-nav");
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       if (window.lenis) window.lenis.start();
