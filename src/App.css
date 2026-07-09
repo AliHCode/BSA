@@ -1178,8 +1178,10 @@
   }
   
   /* Credits Mobile Formatting */
-  .credits-scroll-window {
+  .credits-content {
     padding: 0 20px;
+    padding-bottom: 50vh;
+    box-sizing: border-box;
   }
   .credit-role {
     font-size: 0.75rem;

@@ -269,6 +269,7 @@ const AliModernSection = ({ member, onStoryClick }) => {
 }
 
 const AnimatedTitle = ({ text, highlightWords = [] }) => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
   const words = text.split(" ");
   return (
     <motion.h2
@@ -276,11 +277,29 @@ const AnimatedTitle = ({ text, highlightWords = [] }) => {
       whileInView="visible"
       viewport={{ once: false, amount: 0.5 }}
       variants={{
-        visible: { transition: { staggerChildren: 0.05 } }
+        visible: { transition: { staggerChildren: isMobile ? 0.1 : 0.05 } }
       }}
     >
       {words.map((word, i) => {
         const isHighlight = highlightWords.includes(word);
+        
+        if (isMobile) {
+          // MOBILE: Animate whole words with a lighter tween to save CPU
+          return (
+            <motion.span
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 15 },
+                visible: { opacity: 1, y: 0, transition: { type: "tween", duration: 0.4 } }
+              }}
+              style={{ display: "inline-block", marginRight: "0.3em", color: isHighlight ? "var(--color-accent)" : "inherit", fontWeight: isHighlight ? 800 : 300 }}
+            >
+              {word}
+            </motion.span>
+          );
+        }
+
+        // DESKTOP: Keep the original heavy per-letter spring animation
         const letters = word.split("");
         return (
           <span key={i} style={{ display: "inline-block", marginRight: "0.3em", color: isHighlight ? "var(--color-accent)" : "inherit", fontWeight: isHighlight ? 800 : 300 }}>
