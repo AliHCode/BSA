@@ -1108,7 +1108,7 @@ body.hide-nav .top-nav {
   width: 100%;
   text-align: center;
   color: #fff;
-  padding-bottom: 50vh;
+  padding-bottom: 150vh;
 }
 
 .credit-block {
@@ -1186,7 +1186,7 @@ body.hide-nav .top-nav {
   /* Credits Mobile Formatting */
   .credits-content {
     padding: 0 20px;
-    padding-bottom: 50vh;
+    padding-bottom: 150vh;
     box-sizing: border-box;
   }
   .credit-role {
