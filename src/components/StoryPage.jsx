@@ -168,15 +168,6 @@ export default function StoryPage({ onBackClick }) {
 
   return (
     <div className="story-page">
-      {/* Back Button */}
-      <button 
-        onClick={onBackClick} 
-        className="btn-gta story-back-btn"
-      >
-        <ArrowLeft size={16} />
-        Back To Squad
-      </button>
-
       {/* Story Header */}
       <header className="story-header">
         <h2 className="story-title">
