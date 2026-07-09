@@ -138,6 +138,7 @@ export default function SquadScroll({ onStoryClick }) {
       })}
 
       {/* Option 2: Split Layout (Text Left, Video Right) */}
+      <div style={{ height: '40vh', width: '100vw', backgroundColor: '#000', marginLeft: 'calc(50% - 50vw)' }}></div>
       <section className="video-split-section" style={{ margin: 0, padding: 0, border: 'none', width: '100vw', marginLeft: 'calc(50% - 50vw)' }}>
          <div className="video-split-container">
             <div className="video-split-video-col">
@@ -257,13 +258,10 @@ const AliModernSection = ({ member, onStoryClick }) => {
            <h2 className="ali-modern-title" style={{ marginBottom: "10px" }}>I AM ALI.</h2>
            <span className="member-nickname" style={{ color: member.accentColor, display: "block", marginBottom: "35px" }}>"{member.nickname}"</span>
               <p className="ali-modern-desc">
-                I started university as a quiet and shy kid, but this squad changed me into a confident and positive person. To everyone else, I might look like a quiet and innocent guy, but only the BSA boys know the real me!
+                A proud member of BSA. I started university as a quiet and shy kid, but this squad changed me into a confident and positive person. To everyone else, I might look like a quiet and innocent guy, but only the BSA boys know the real me!
                 <br /><br />
-                A proud member of BSA. While the rest of the boys were busy causing chaos in university and living in the moment, I decided to create this. I built this space because some eras are too legendary to just live in the past.
+                While the rest of the boys were busy causing chaos in university and living in the moment, I decided to create this. I built this space because some eras are too legendary to just live in the past.
               </p>
-           <button onClick={onStoryClick} className="ali-modern-btn">
-             EXPLORE THE ARCHIVES
-           </button>
         </motion.div>
       </div>
     </section>
@@ -323,7 +321,7 @@ const FeaturedStories = () => {
                 viewport={{ once: false, amount: 0.5 }}
                 transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
               >
-                The boys looking sharp on Pen Day! Please do not ask to see the back of our shirts. We drew unspeakable things on each other and spent the whole day walking with our hands covering our backs.
+                The boys looked sharp on Pen Day! Please do not ask to see the back of our shirts. We drew unspeakable things on each other and spent the whole day walking with our hands covering our backs.
               </motion.p>
            </div>
         </div>
@@ -344,7 +342,7 @@ const FeaturedStories = () => {
                 viewport={{ once: false, amount: 0.5 }}
                 transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
               >
-                The final day. The final picture. We survived the exams, the open houses, and the hostel life together. What an absolute ride it has been with these boys.
+                The final day. The final picture. We survived the exams, the open house, and the university life together. What an absolute ride it has been with these boys.
               </motion.p>
            </div>
         </div>

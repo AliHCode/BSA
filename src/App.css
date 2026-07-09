@@ -467,6 +467,7 @@
   position: relative;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  will-change: transform;
 }
 
 .polaroid-media-wrapper {
@@ -487,6 +488,7 @@
   animation: gtaPanZoom 28s ease-in-out infinite;
   /* Continuous gallery motion */
   transition: var(--transition-smooth);
+  will-change: transform, filter;
 }
 
 .polaroid-card:hover {
@@ -1067,7 +1069,102 @@
   text-shadow: 0 4px 20px rgba(0,0,0,0.9);
 }
 
+.credits-mega-wrapper {
+  background: #000;
+  width: 100vw;
+  position: relative;
+  margin-left: calc(50% - 50vw);
+}
+
+.credits-sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.credits-scroll-window {
+  width: 100%;
+  max-width: 800px;
+  height: 100vh;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent 5%, black 25%, black 75%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 25%, black 75%, transparent 95%);
+}
+
+.credits-content {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  padding-bottom: 50vh;
+}
+
+.credit-block {
+  margin-bottom: 60px;
+}
+
+.credit-role {
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 4px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.credit-name {
+  font-family: var(--font-body);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.credit-desc {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  color: #aaa;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.final-credit-logo {
+  margin-top: 150px;
+}
+
+.tagline-final {
+  color: var(--color-accent) !important;
+  font-weight: 500;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  font-size: 1rem !important;
+}
+
+.logo-final {
+  font-size: 5rem !important;
+  font-family: var(--font-title);
+  letter-spacing: 12px;
+  font-weight: 900;
+  margin-top: 20px;
+}
+
 @media (max-width: 768px) {
+  .sticky-image-container img {
+    object-fit: contain;
+    background: #000;
+  }
   .story-text-card {
     padding: 0;
     margin-top: 50vh;
@@ -1079,4 +1176,24 @@
     font-size: 1rem;
     padding: 0 15px;
   }
+}
+
+/* ==========================================================================
+   GLOBAL HARDWARE GPU ACCELERATION (Mobile & Desktop)
+   Forces the browser to composite heavy animations onto the GPU,
+   eliminating stuttering and lag spikes on scroll.
+   ========================================================================== */
+img, 
+video, 
+.glass-panel, 
+.museum-node, 
+.polaroid-card,
+.squad-card,
+.timeline-card,
+.hero-editorial-desc {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }

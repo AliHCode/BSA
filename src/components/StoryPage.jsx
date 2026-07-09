@@ -90,13 +90,12 @@ export default function StoryPage({ onBackClick }) {
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
     const initialized = mediaMemories.map((item, idx) => {
-      // Pick random coordinates within bounds to avoid clustering
-      // Constraining coordinates tightly to prevent overflow
-      const maxX = isMobile ? 60 : 70; // Safe limits so they don't overflow
+      const maxX = isMobile ? 60 : 70;
       const maxY = isMobile ? 65 : 70;
       const randomX = Math.random() * maxX + 5; 
       const randomY = Math.random() * maxY + 5; 
-      const randomRotate = Math.random() * 30 - 15; // -15deg to 15deg
+      const randomRotate = Math.random() * 30 - 15;
+      
       return {
         ...item,
         x: randomX,
@@ -106,6 +105,14 @@ export default function StoryPage({ onBackClick }) {
       };
     });
     setCards(initialized);
+
+    // Preload all media instantly so it's buttery smooth when the user scrolls down
+    initialMemories.forEach(media => {
+      if (media.type === "image") {
+        const img = new Image();
+        img.src = media.src;
+      }
+    });
   }, []);
 
   const handleScatter = () => {
@@ -252,7 +259,7 @@ export default function StoryPage({ onBackClick }) {
       <section className="media-grid-section" style={{ overflow: "visible" }}>
         <h2 className="media-grid-title">The Memory Board</h2>
         <p style={{ color: "var(--text-light)", marginBottom: "15px", fontSize: "1.1rem" }}>
-          An interactive scatter board of our hosteling days. Grab and drag photos around, throw them, or click to view/play in fullscreen! (Supports unlimited photos and videos).
+          An interactive scatter board of our hosteling days. Grab and drag photos around, throw them, or click to view/play in fullscreen!
         </p>
 
         {/* Board Controls */}
@@ -377,6 +384,9 @@ export default function StoryPage({ onBackClick }) {
       </section>
 
       {/* Emotional Footer Quote */}
+      {/* Epic Movie Credits Finale */}
+      <CreditsSection />
+
       <footer className="story-footer">
         <h3 className="footer-quote">
           Room 235 & 111. Quetta. Hostel Nights.<br />
@@ -492,3 +502,204 @@ export default function StoryPage({ onBackClick }) {
     </div>
   );
 }
+
+const CreditsSection = () => {
+  const [isLocked, setIsLocked] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [creditsFinished, setCreditsFinished] = useState(false);
+
+  useEffect(() => {
+    if (!isLocked || creditsFinished) return;
+    
+    if (window.lenis) window.lenis.stop();
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleAttemptScroll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setShowWarning(true);
+      setTimeout(() => setShowWarning(false), 2000);
+    };
+
+    const preventKeyScroll = (e) => {
+      const keys = ["ArrowUp", "ArrowDown", "Space", "PageUp", "PageDown", "Home", "End"];
+      if (keys.includes(e.code)) {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowWarning(true);
+        setTimeout(() => setShowWarning(false), 2000);
+      }
+    };
+
+    window.addEventListener("wheel", handleAttemptScroll, { capture: true, passive: false });
+    window.addEventListener("touchmove", handleAttemptScroll, { capture: true, passive: false });
+    window.addEventListener("keydown", preventKeyScroll, { capture: true, passive: false });
+
+    const handleDoubleClick = () => {
+      setCreditsFinished(true);
+      setIsLocked(false);
+    };
+
+    window.addEventListener("dblclick", handleDoubleClick);
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      if (window.lenis) window.lenis.start();
+      window.removeEventListener("wheel", handleAttemptScroll, { capture: true });
+      window.removeEventListener("touchmove", handleAttemptScroll, { capture: true });
+      window.removeEventListener("keydown", preventKeyScroll, { capture: true });
+      window.removeEventListener("dblclick", handleDoubleClick);
+    };
+  }, [isLocked, creditsFinished]);
+
+  return (
+    <section className="credits-mega-wrapper">
+      <div style={{ height: "40vh", background: "#000", width: "100%" }}></div>
+      
+      <motion.div 
+        className="credits-sticky-container"
+        onViewportEnter={() => {
+          if (!creditsFinished) setIsLocked(true);
+        }}
+        viewport={{ once: true, amount: 0.9 }}
+      >
+        <div className="credits-scroll-window">
+          <motion.div
+            className="credits-content"
+            initial={{ y: "100vh" }}
+            animate={isLocked || creditsFinished ? { y: "-100%" } : { y: "100vh" }}
+            transition={{ duration: 90, ease: "linear" }}
+            onAnimationComplete={() => {
+              if (isLocked) {
+                setCreditsFinished(true);
+                setIsLocked(false);
+              }
+            }}
+          >
+            <div className="credit-block">
+              <h4 className="credit-role">D I R E C T E D &nbsp; & &nbsp; C R E A T E D &nbsp; B Y</h4>
+              <p className="credit-name">Ali Hussnain (Meetha)</p>
+              <p className="credit-desc">Memory Archivist</p>
+            </div>
+            
+            <div className="credit-block">
+              <h4 className="credit-role">T H E &nbsp; C O R E &nbsp; S Q U A D</h4>
+              
+              <p className="credit-name">Muhammad Taqi (Shah G)</p>
+              <p className="credit-desc">The Intellectual Anchor. Master of C++, Databases, and an absolute Human Anime Encyclopedia.</p>
+              
+              <p className="credit-name">Muhammad Abdullah (AMB)</p>
+              <p className="credit-desc">The Heart of BSA. The ultimate target of all pranks, spreading pure positive energy whenever he is in the room.</p>
+              
+              <p className="credit-name">Muhammad Qadeer (Grenade)</p>
+              <p className="credit-desc">Master of Chaos. The official squad Chef, Music DJ, and the absolute mastermind of all hostel activities.</p>
+              
+              <p className="credit-name">Muhammad Haseeb (Rider)</p>
+              <p className="credit-desc">Savior of Degrees. The quiet pillar, gaming powerhouse, and the guy who taught us the entire syllabus before exams.</p>
+              
+              <p className="credit-name">Hammad Khalil (Raja G)</p>
+              <p className="credit-desc">The Mehran King. The ultimate adventure enabler, unofficial Qawal, and the funniest talker of the group.</p>
+              
+              <p className="credit-name">Muhammad Haris (Bawa)</p>
+              <p className="credit-desc">The Solution Encyclopedia. The genius anchor who keeps the group bound together through any situation.</p>
+              
+              <p className="credit-name">Hammad Abrar (Buzurg)</p>
+              <p className="credit-desc">The Disciplined Anchor. The ultimate coding expert, tech genius, and our motivation for the future.</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">T H E &nbsp; T R U E &nbsp; V I L L A I N S &nbsp; ( A N T A G O N I S T S )</h4>
+              <p className="credit-name">The Hostel Mess Food</p>
+              <p className="credit-desc">Surviving entirely on watery daal and unidentified gravies.</p>
+              <p className="credit-name">The 9 AM Classes</p>
+              <p className="credit-desc">The ultimate test of human willpower during freezing winters.</p>
+              <p className="credit-name">The University WiFi</p>
+              <p className="credit-desc">Exam say aik din pehlay band ho jata tha</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">T H E &nbsp; U N S U N G &nbsp; H E R O E S</h4>
+              <p className="credit-name">The Legendary Red Suzuki Mehran</p>
+              <p className="credit-desc">Defying the laws of physics by fitting 8 grown men inside.</p>
+              <p className="credit-name">The Local Photocopier Guy</p>
+              <p className="credit-desc">Printing our assignments 5 minutes before the submission time.</p>
+              <p className="credit-name">YouTube Indian Tutors</p>
+              <p className="credit-desc">The real professors who actually taught us the entire 4-year degree in one night.</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">F I L M E D &nbsp; O N &nbsp; L O C A T I O N &nbsp; A T</h4>
+              <p className="credit-name">Room 235 & Room 111 (The Headquarters)</p>
+              <p className="credit-name">The Back Benches of Lecture Halls</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">M E M O R A B L E &nbsp; A R C S &nbsp; & &nbsp; S A G A S</h4>
+              <p className="credit-name">The 3 AM Mongol Throat Singing Incident</p>
+              <p className="credit-name">The Grand Milads</p>
+              <p className="credit-name">The 4th Year Room Initiations</p>
+              <p className="credit-name">Late night bomb blasts</p>
+              <p className="credit-name">Juniors ko room mein bulwana</p>
+              <p className="credit-name">The "We Will Start Studying Tomorrow" Arc (Lasted 4 Years)</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">S P E C I A L &nbsp; T H A N K S &nbsp; T O</h4>
+              <p className="credit-name">Sabir Bhai & Shah G</p>
+              <p className="credit-desc">The real MVP Exam Invigilators. They handed out sheets and silently watched us cheat without ever complaining or stopping us.</p>
+              <p className="credit-name">Bawa Haris</p>
+              <p className="credit-desc">For constantly forcing me to finish this project when I was about to give up on it.</p>
+              <p className="credit-name">Late Night Tea Sessions</p>
+              <p className="credit-name">Last-minute Exam Prep by Haseeb</p>
+              <p className="credit-name">Every Single Argument That Ended in Laughter</p>
+            </div>
+
+            <div className="credit-block">
+              <h4 className="credit-role">I N &nbsp; L O V I N G &nbsp; M E M O R Y &nbsp; O F</h4>
+              <p className="credit-name">Our Sleep Schedules (2022 - 2026)</p>
+              <p className="credit-name">Passing Grades</p>
+              <p className="credit-name">The quiet nights before BSA was formed</p>
+            </div>
+
+            <div className="credit-block final-credit-logo">
+              <p className="credit-desc tagline-final">4 YEARS. 8 BROTHERS. COUNTLESS MEMORIES.</p>
+              <p className="credit-name logo-final">BSA.</p>
+              <p className="credit-desc">Some eras are too legendary to just live in the past.</p>
+            </div>
+            
+          </motion.div>
+        </div>
+      </motion.div>
+      
+      <AnimatePresence>
+        {showWarning && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            style={{
+              position: "fixed",
+              bottom: "30px",
+              right: "30px",
+              background: "rgba(255, 42, 95, 0.9)",
+              color: "#fff",
+              padding: "10px 20px",
+              borderRadius: "4px",
+              fontFamily: "var(--font-title)",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              zIndex: 9999,
+              boxShadow: "0 4px 20px rgba(0,0,0,0.5)"
+            }}
+          >
+            Please wait. Credits are rolling...
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div style={{ height: "50vh", background: "#000", width: "100%" }}></div>
+    </section>
+  );
+};

@@ -8,22 +8,32 @@ import ConfessionsPage from "./components/ConfessionsPage";
 import AdminPanel from "./components/AdminPanel";
 
 export default function App() {
-  const [view, setView] = useState("home"); // "home", "story", or "admin"
+  const getInitialView = () => {
+    const hash = window.location.hash.replace("#", "");
+    if (["home", "story", "admin", "confessions"].includes(hash)) return hash;
+    return "home";
+  };
+
+  const [view, setView] = useState(getInitialView());
+
+  const handleNavigate = (newView) => {
+    window.location.hash = newView === "home" ? "" : newView;
+    setView(newView);
+  };
 
   useEffect(() => {
-    // Check if the user is secretly trying to access the admin panel
-    if (window.location.hash === "#admin") {
-      setView("admin");
-    }
-
     const handleHashChange = () => {
-      if (window.location.hash === "#admin") setView("admin");
-      else if (view === "admin") setView("home");
+      const hash = window.location.hash.replace("#", "");
+      if (["home", "story", "admin", "confessions"].includes(hash)) {
+        setView(hash);
+      } else {
+        setView("home");
+      }
     };
 
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [view]);
+  }, []);
 
   // Initialize Lenis smooth scroll and handle view shifts
   useEffect(() => {
@@ -84,31 +94,31 @@ export default function App() {
             src="/images/Bsalogo.jpg" 
             alt="BSA" 
             className="nav-logo-img" 
-            onClick={() => setView("home")} 
+            onClick={() => handleNavigate("home")} 
             style={{ height: "45px", width: "45px", cursor: "pointer", objectFit: "cover", borderRadius: "2px", border: "1px solid var(--color-border-active)" }}
             onError={(e) => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'block';
             }}
           />
-          <div className="nav-logo" onClick={() => setView("home")} style={{ cursor: "pointer", display: "none" }}>
+          <div className="nav-logo" onClick={() => handleNavigate("home")} style={{ cursor: "pointer", display: "none" }}>
             BSA<span>.</span>
           </div>
         </div>
         <div className="controls-group">
           <button 
-            onClick={() => setView("confessions")} 
+            onClick={() => handleNavigate("confessions")} 
             className="story-nav-btn"
             style={{ background: "var(--color-accent)", color: "#fff", border: "none", letterSpacing: "2px", fontWeight: "700" }}
           >
             CONFESSIONS
           </button>
           {view === "home" ? (
-            <button onClick={() => setView("story")} className="story-nav-btn">
+            <button onClick={() => handleNavigate("story")} className="story-nav-btn">
               Our Story
             </button>
           ) : (
-            <button onClick={() => setView("home")} className="story-nav-btn">
+            <button onClick={() => handleNavigate("home")} className="story-nav-btn">
               The Squad
             </button>
           )}
@@ -120,21 +130,21 @@ export default function App() {
         <div className="snap-container">
           {/* Section 1: Hero entrance with video */}
           <section className="snap-section">
-            <Hero onStartClick={() => setView("story")} />
+            <Hero onStartClick={() => handleNavigate("story")} />
           </section>
 
           {/* Section 2+: The Squad scroll show */}
-          <SquadScroll onStoryClick={() => setView("story")} />
+          <SquadScroll onStoryClick={() => handleNavigate("story")} />
         </div>
       ) : view === "story" ? (
         // Dedicated Story page (Timeline & Polaroid Memories)
-        <StoryPage onBackClick={() => setView("home")} />
+        <StoryPage onBackClick={() => handleNavigate("home")} />
       ) : view === "admin" ? (
         // Secret Developer Admin Panel
-        <AdminPanel onBackClick={() => { window.location.hash = ""; setView("home"); }} />
+        <AdminPanel onBackClick={() => handleNavigate("home")} />
       ) : (
         // BSA Confessions Page
-        <ConfessionsPage onBackClick={() => setView("home")} />
+        <ConfessionsPage onBackClick={() => handleNavigate("home")} />
       )}
     </div>
   );

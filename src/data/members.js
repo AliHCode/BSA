@@ -8,9 +8,9 @@ export const membersData = [
     tagline: "The Software Engineering student who documented the squad's journey.",
     image: "/images/Ali.jpeg",
     accentColor: "#ff2a5f",
-    letter: `I started university as a quiet and shy kid, but this squad changed me into a confident and positive person. To everyone else, I might look like a quiet and innocent guy, but only the BSA boys know the real me!
+    letter: `A proud member of BSA. I started university as a quiet and shy kid, but this squad changed me into a confident and positive person. To everyone else, I might look like a quiet and innocent guy, but only the BSA boys know the real me!
 
-A proud member of BSA. While the rest of the boys were busy causing chaos in university and living in the moment, I decided to create this. I built this space because some eras are too legendary to just live in the past.`
+While the rest of the boys were busy causing chaos in university and living in the moment, I decided to create this. I built this space because some eras are too legendary to just live in the past.`
   },
   {
     id: "taqi",
