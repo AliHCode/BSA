@@ -1,28 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft, Grid, Shuffle, X, Maximize2 } from "lucide-react";
+import initialMemories from "../data/memories.json";
 
 export default function StoryPage({ onBackClick }) {
   
   // Array of memories for the Polaroid Grid / 3D Scatter Board
-  const mediaMemories = [
-    { id: 1, type: "image", src: "/images/memory_class.jpg", caption: "The First Class" },
-    { id: 2, type: "image", src: "/images/memory_room235.jpg", caption: "Room 235 Shenanigans" },
-    { id: 3, type: "image", src: "/images/memory_quetta.jpg", caption: "Quetta Chai Therapy" },
-    { id: 4, type: "image", src: "/images/memory_trip.jpg", caption: "Endless Hostel Parties" },
-    { id: 5, type: "image", src: "/images/memory_exam.jpg", caption: "Exam Prep Nightmares" },
-    { id: 6, type: "image", src: "/images/memory_lastclass.jpg", caption: "The Final Class" },
-    { id: 7, type: "video", src: "/videos/memory_video1.mp4", caption: "Room 235 Karaoke Jam" },
-    { id: 8, type: "video", src: "/videos/memory_video2.mp4", caption: "Late Night Chai Vibe" },
-    { id: 9, type: "image", src: "/images/memory_sports.jpg", caption: "Hostel Sports Day" },
-    { id: 10, type: "video", src: "/videos/memory_video3.mp4", caption: "Phone Hiding Prank" },
-    { id: 11, type: "image", src: "/images/memory_mess.jpg", caption: "JBH Mess Gatherings" },
-    { id: 12, type: "video", src: "/videos/memory_video4.mp4", caption: "Corridor Football Chaos" },
-    { id: 13, type: "image", src: "/images/memory_mehran.jpg", caption: "Mehran Squeeze Outing" },
-    { id: 14, type: "image", src: "/images/memory_lab.jpg", caption: "Late Night Coding Sessions" },
-    { id: 15, type: "video", src: "/videos/memory_video5.mp4", caption: "FYP Submission Celebration" },
-    { id: 16, type: "image", src: "/images/memory_room111.jpg", caption: "Room 111 Final Vibe" }
-  ];
+  const [mediaMemories, setMediaMemories] = useState(initialMemories);
 
   const targetRef = useRef(null);
   const timelineRef = useRef(null);
@@ -33,6 +17,7 @@ export default function StoryPage({ onBackClick }) {
   const [cards, setCards] = useState([]);
   const [viewMode, setViewMode] = useState("scatter"); // "scatter" or "grid"
   const [activeMedia, setActiveMedia] = useState(null); // for lightbox popup
+  const [shuffleTrigger, setShuffleTrigger] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -64,13 +49,53 @@ export default function StoryPage({ onBackClick }) {
     };
   }, []);
 
+  // Block scroll when lightbox is active (handles native & virtual/Lenis scroll via capture phase)
+  useEffect(() => {
+    if (!activeMedia) return;
+
+    const preventScroll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const preventKeyScroll = (e) => {
+      const keys = ["ArrowUp", "ArrowDown", "Space", "PageUp", "PageDown", "Home", "End"];
+      if (keys.includes(e.code)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    // Lock styles
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    if (window.lenis) window.lenis.stop();
+
+    // Block all mouse wheel, trackpad, touch, & key gestures globally in the CAPTURING phase
+    window.addEventListener("wheel", preventScroll, { capture: true, passive: false });
+    window.addEventListener("touchmove", preventScroll, { capture: true, passive: false });
+    window.addEventListener("keydown", preventKeyScroll, { capture: true, passive: false });
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      if (window.lenis) window.lenis.start();
+      window.removeEventListener("wheel", preventScroll, { capture: true });
+      window.removeEventListener("touchmove", preventScroll, { capture: true });
+      window.removeEventListener("keydown", preventKeyScroll, { capture: true });
+    };
+  }, [activeMedia]);
+
   // Initialize random scatter coordinates for the Polaroids
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
     const initialized = mediaMemories.map((item, idx) => {
       // Pick random coordinates within bounds to avoid clustering
-      const randomX = Math.random() * (isMobile ? 65 : 82) + 2; // 2% to 84%
-      const randomY = Math.random() * (isMobile ? 75 : 80) + 5; // 5% to 85%
+      // Constraining coordinates tightly to prevent overflow
+      const maxX = isMobile ? 60 : 70; // Safe limits so they don't overflow
+      const maxY = isMobile ? 65 : 70;
+      const randomX = Math.random() * maxX + 5; 
+      const randomY = Math.random() * maxY + 5; 
       const randomRotate = Math.random() * 30 - 15; // -15deg to 15deg
       return {
         ...item,
@@ -83,14 +108,14 @@ export default function StoryPage({ onBackClick }) {
     setCards(initialized);
   }, []);
 
-  // Shuffle board items randomly
   const handleScatter = () => {
     setViewMode("scatter");
+    setShuffleTrigger(prev => prev + 1);
     const isMobile = window.innerWidth <= 768;
     setCards(prev => prev.map((c) => ({
       ...c,
-      x: Math.random() * (isMobile ? 65 : 82) + 2,
-      y: Math.random() * (isMobile ? 75 : 80) + 5,
+      x: Math.random() * (isMobile ? 60 : 70) + 5,
+      y: Math.random() * (isMobile ? 65 : 70) + 5,
       rotate: Math.random() * 30 - 15
     })));
   };
@@ -184,7 +209,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Ali Hall & The Circle Grows</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
                 <p>
-                  Second year tak aate aate humara circle expand hua aur private mess humara ultimate hangout spot ban gaya. Wahan Taqi, Qadeer, Abdullah, dono Hamad, Haris aur Haseeb ke sath mil kar jo shugal lagta tha, usne humari power aur vibe ko multiply kar diya. Yehi wo waqt tha jab "Bismillah Student Association (BSA)" ka title officially wujood mein aaya. Hum sirf dost nahi rahe thay, hum ek brotherhood ban chuke thay. Har choti baat par party, pranks, aur ek doosre ki taang kheenchna humari pehchaan ban gayi.
+                  Second year tak aate aate humara circle expand hua aur private mess humara ultimate hangout spot ban gaya. Wahan Taqi, Qadeer, Abdullah, dono Hamad, Haris aur Haseeb ke sath jo mehfilein jama hoti theen, unhon ne is squad ko forever solid kar diya. Yehi wo waqt tha jab "Bismillah Student Association (BSA)" ka title officially wujood mein aaya. Hum sirf dost nahi rahe thay, hum ek brotherhood ban chuke thay. Har choti baat par party, pranks, aur ek doosre ki taang kheenchna humari pehchaan ban gayi.
                 </p>
               </div>
             </div>
@@ -199,7 +224,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Room 235</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>BSA Formation & Peak Pranks</p>
                 <p>
-                  BSA ne humari university life ko boring se nikal kar ek movie mein badal diya. Room 235 humara undisputed headquarters tha jahan day-scholars aur hostelites ka farq khatam ho gaya. Hamad Khalil ki iconic laal Mehran par aadhi raat ko unplanned long drives par nikal jana, seniors/juniors ke sath shugal lagana, aur doston ke phones chupa kar unko waheen rok lena—ye saari memories humari life ka sabse khoobsurat hissa ban chuki hain. BSA ka impact ye tha ke koi ek din bhi stress mein nahi guzra.
+                  BSA ne humari university life ko boring se nikal kar ek movie mein badal diya. Room 235 humara undisputed headquarters tha jahan day-scholars aur hostelites ka farq khatam ho gaya. Hamad Khalil ki iconic laal Mehran par aadhi raat ko unplanned long drives par nikal jana, poori poori raat jaag kar useless topics par endless behas karna, aur doston ke phones chupa kar unko waheen rok lena—ye saari memories humari life ka sabse khoobsurat hissa ban chuki hain. BSA ka impact ye tha ke koi ek din bhi stress mein nahi guzra.
                 </p>
               </div>
             </div>
@@ -249,14 +274,15 @@ export default function StoryPage({ onBackClick }) {
         </div>
 
         {/* 3D Scatter Canvas */}
-        <div ref={canvasRef} className="polaroid-scatter-canvas">
+        <div ref={canvasRef} className={`polaroid-scatter-canvas ${viewMode === "grid" ? "grid-mode" : ""}`}>
           {cards.map((media) => (
             <motion.div 
-              key={media.id} 
+              key={`${viewMode}-${shuffleTrigger}-${media.id}`} 
               className="polaroid-card scatter-card" 
               style={{ 
-                left: `${media.x}%`, 
-                top: `${media.y}%`, 
+                position: viewMode === "grid" ? "relative" : "absolute",
+                left: viewMode === "grid" ? "auto" : `${media.x}%`, 
+                top: viewMode === "grid" ? "auto" : `${media.y}%`, 
                 zIndex: media.zIndex
               }}
               animate={{ 
@@ -266,7 +292,7 @@ export default function StoryPage({ onBackClick }) {
               transition={{ type: "spring", stiffness: 85, damping: 14 }}
               drag
               dragConstraints={canvasRef}
-              dragElastic={0.05}
+              dragElastic={0}
               dragMomentum={true}
               whileDrag={{ scale: 1.08, zIndex: 9999 }}
               onDragStart={() => {
@@ -286,6 +312,7 @@ export default function StoryPage({ onBackClick }) {
                     src={media.src} 
                     alt={media.caption} 
                     className="polaroid-img"
+                    style={{ objectPosition: `${media.posX !== undefined ? media.posX : 50}% ${media.posY !== undefined ? media.posY : 50}%` }}
                     onError={(e) => {
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'flex';
@@ -296,7 +323,7 @@ export default function StoryPage({ onBackClick }) {
                     <video 
                       src={media.src} 
                       className="polaroid-video" 
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${media.posX !== undefined ? media.posX : 50}% ${media.posY !== undefined ? media.posY : 50}%` }}
                       muted
                       loop
                       playsInline
@@ -343,7 +370,7 @@ export default function StoryPage({ onBackClick }) {
                   </span>
                 </div>
               </div>
-              <span className="polaroid-caption">{media.caption}</span>
+              <span className="polaroid-caption">{media.title || media.caption}</span>
             </motion.div>
           ))}
         </div>
@@ -374,6 +401,8 @@ export default function StoryPage({ onBackClick }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveMedia(null)}
+            data-lenis-prevent
+            style={{ overscrollBehavior: "none", touchAction: "none" }}
           >
             <motion.div 
               className="lightbox-content"
@@ -382,8 +411,9 @@ export default function StoryPage({ onBackClick }) {
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
+              data-lenis-prevent
             >
-              <button className="lightbox-close" onClick={() => setActiveMedia(null)}>
+              <button className="lightbox-close" style={{ color: "#ffffff", borderColor: "rgba(255,255,255,0.3)" }} onClick={() => setActiveMedia(null)}>
                 <X size={18} /> CLOSE
               </button>
 
@@ -429,16 +459,32 @@ export default function StoryPage({ onBackClick }) {
                 </span>
               </div>
 
-              <h3 style={{ 
-                marginTop: "20px", 
-                fontFamily: "var(--font-title)", 
-                letterSpacing: "2px", 
-                fontSize: "1.2rem", 
-                color: "#fff",
-                textTransform: "uppercase"
-              }}>
-                {activeMedia.caption}
-              </h3>
+              <div style={{ textAlign: "center", width: "100%" }}>
+                <h2 style={{ 
+                  marginTop: "20px", 
+                  fontFamily: "var(--font-title)", 
+                  letterSpacing: "2px", 
+                  fontSize: "1.4rem", 
+                  color: "#fff",
+                  textTransform: "uppercase"
+                }}>
+                  {activeMedia.title || activeMedia.caption}
+                </h2>
+                
+                {activeMedia.title && activeMedia.caption && (
+                  <h3 style={{ 
+                    marginTop: "8px", 
+                    fontFamily: "var(--font-title)", 
+                    letterSpacing: "1px", 
+                    fontSize: "1.1rem", 
+                    color: "var(--color-accent)",
+                    textTransform: "uppercase",
+                    fontWeight: 400
+                  }}>
+                    {activeMedia.caption}
+                  </h3>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}

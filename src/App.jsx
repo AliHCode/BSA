@@ -5,9 +5,25 @@ import Hero from "./components/Hero";
 import SquadScroll from "./components/SquadScroll";
 import StoryPage from "./components/StoryPage";
 import ConfessionsPage from "./components/ConfessionsPage";
+import AdminPanel from "./components/AdminPanel";
 
 export default function App() {
-  const [view, setView] = useState("home"); // "home" or "story"
+  const [view, setView] = useState("home"); // "home", "story", or "admin"
+
+  useEffect(() => {
+    // Check if the user is secretly trying to access the admin panel
+    if (window.location.hash === "#admin") {
+      setView("admin");
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash === "#admin") setView("admin");
+      else if (view === "admin") setView("home");
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [view]);
 
   // Initialize Lenis smooth scroll and handle view shifts
   useEffect(() => {
@@ -36,11 +52,13 @@ export default function App() {
 
       rafId = requestAnimationFrame(raf);
       lenis.scrollTo(0, { immediate: true });
+      window.lenis = lenis; // Expose globally to pause during lightboxes
     }
 
     return () => {
       if (lenis) {
         lenis.destroy();
+        window.lenis = null;
       }
       if (rafId) {
         cancelAnimationFrame(rafId);
@@ -111,6 +129,9 @@ export default function App() {
       ) : view === "story" ? (
         // Dedicated Story page (Timeline & Polaroid Memories)
         <StoryPage onBackClick={() => setView("home")} />
+      ) : view === "admin" ? (
+        // Secret Developer Admin Panel
+        <AdminPanel onBackClick={() => { window.location.hash = ""; setView("home"); }} />
       ) : (
         // BSA Confessions Page
         <ConfessionsPage onBackClick={() => setView("home")} />

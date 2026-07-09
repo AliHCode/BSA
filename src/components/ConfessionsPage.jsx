@@ -509,7 +509,7 @@ export default function ConfessionsPage() {
               <p style={{ marginBottom: "20px", color: "#ff2a5f", fontWeight: "bold", letterSpacing: "2px" }}>ERROR: SECURITY SHIELD PREVENTED OVERRIDE</p>
               
               <p style={{ fontStyle: "italic", color: "#ffaa00", fontSize: "1.3rem", lineHeight: "1.6", borderLeft: "4px solid #ffaa00", paddingLeft: "15px", textAlign: "left" }}>
-                "Nice try! But degree haath mein aane tak in baaton ko locked hi rehne do, warna administration ne humein seedha farigh kar dena hai!"
+                "Dil toh bohot chahta hai ke sab sach bata dun, lekin phir do cheezein hongi: ya toh kuch log shadeed offend ho jayenge, ya humari aglay hi din DSA mein peshi ho jayegi. Safety first!"
               </p>
               
               <p style={{ marginTop: "30px", color: "#ccc", lineHeight: "1.8" }}>

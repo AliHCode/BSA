@@ -181,6 +181,9 @@ export default function SquadScroll({ onStoryClick }) {
       {/* Option 1: Quotes Strobe */}
       <QuotesStrobe />
 
+      {/* Featured Stories: Pen Day & The Last Stand */}
+      <FeaturedStories />
+
       {/* Outro section */}
       <section 
         data-id="outro"
@@ -264,5 +267,88 @@ const AliModernSection = ({ member, onStoryClick }) => {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+const AnimatedTitle = ({ text, highlightWords = [] }) => {
+  const words = text.split(" ");
+  return (
+    <motion.h2
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.5 }}
+      variants={{
+        visible: { transition: { staggerChildren: 0.05 } }
+      }}
+    >
+      {words.map((word, i) => {
+        const isHighlight = highlightWords.includes(word);
+        const letters = word.split("");
+        return (
+          <span key={i} style={{ display: "inline-block", marginRight: "0.3em", color: isHighlight ? "var(--color-accent)" : "inherit", fontWeight: isHighlight ? 800 : 300 }}>
+            {letters.map((char, j) => (
+              <motion.span
+                key={j}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 100 } }
+                }}
+                style={{ display: "inline-block" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
+        );
+      })}
+    </motion.h2>
+  );
+};
+
+const FeaturedStories = () => {
+  return (
+    <div className="featured-stories-container">
+      {/* Pen Day Story */}
+      <section className="featured-story-section">
+        <div className="sticky-image-container">
+           <img src="/images/92.jpeg" alt="Pen Day Cover-up" />
+           <div className="overlay"></div>
+        </div>
+        <div className="scrolling-text-container">
+           <div className="story-text-card">
+              <AnimatedTitle text="Pen Day (Front View Only)" highlightWords={["(Front", "View", "Only)"]} />
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.5 }}
+                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+              >
+                The boys looking sharp on Pen Day! Please do not ask to see the back of our shirts. We drew unspeakable things on each other and spent the whole day walking with our hands covering our backs.
+              </motion.p>
+           </div>
+        </div>
+      </section>
+      
+      {/* The Last Stand Story */}
+      <section className="featured-story-section">
+        <div className="sticky-image-container">
+           <img src="/images/103.jpeg" alt="The Last Stand" />
+           <div className="overlay"></div>
+        </div>
+        <div className="scrolling-text-container">
+           <div className="story-text-card">
+              <AnimatedTitle text="The Last Stand" highlightWords={["Stand"]} />
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.5 }}
+                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+              >
+                The final day. The final picture. We survived the exams, the open houses, and the hostel life together. What an absolute ride it has been with these boys.
+              </motion.p>
+           </div>
+        </div>
+      </section>
+    </div>
   );
 }
