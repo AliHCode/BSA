@@ -337,8 +337,8 @@ const FeaturedStories = () => {
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.5 }}
-                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               >
                 The boys looked sharp on Pen Day! Please do not ask to see the back of our shirts. We drew unspeakable things on each other and spent the whole day walking with our hands covering our backs.
               </motion.p>
@@ -358,8 +358,8 @@ const FeaturedStories = () => {
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.5 }}
-                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               >
                 The final day. The final picture. We survived the exams, the open house, and the university life together. What an absolute ride it has been with these boys.
               </motion.p>

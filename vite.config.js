@@ -2,6 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
+import sharp from 'sharp'
+import ffmpeg from 'fluent-ffmpeg'
+import ffmpegStatic from 'ffmpeg-static'
+
+// Set ffmpeg path
+ffmpeg.setFfmpegPath(ffmpegStatic);
 
 // Custom plugin to handle file uploads locally during development
 const memoryUploadPlugin = () => ({
@@ -13,7 +19,7 @@ const memoryUploadPlugin = () => ({
         req.on('data', chunk => {
           body += chunk.toString();
         });
-        req.on('end', () => {
+        req.on('end', async () => {
           try {
             const data = JSON.parse(body);
             const { fileName, fileType, base64Data, caption, title, posX, posY } = data;
@@ -26,12 +32,44 @@ const memoryUploadPlugin = () => ({
             const base64Content = base64Data.split(';base64,').pop();
             fs.writeFileSync(publicPath, base64Content, { encoding: 'base64' });
 
+            const newMemoryId = Date.now();
+
+            // Generate Thumbnail
+            const thumbsDir = path.resolve(__dirname, 'public/thumbnails');
+            if (!fs.existsSync(thumbsDir)) {
+              fs.mkdirSync(thumbsDir, { recursive: true });
+            }
+            
+            if (fileType === 'image') {
+              const thumbPath = path.resolve(thumbsDir, `${newMemoryId}.webp`);
+              await sharp(publicPath)
+                .resize(400, null, { withoutEnlargement: true })
+                .webp({ quality: 60 })
+                .toFile(thumbPath);
+            } else if (fileType === 'video') {
+              const thumbPath = path.resolve(thumbsDir, `${newMemoryId}.jpg`);
+              await new Promise((resolve) => {
+                ffmpeg(publicPath)
+                  .on('end', resolve)
+                  .on('error', (err) => {
+                    console.error('FFmpeg error:', err);
+                    resolve();
+                  })
+                  .screenshots({
+                    timestamps: [1],
+                    filename: `${newMemoryId}.jpg`,
+                    folder: thumbsDir,
+                    size: '400x?'
+                  });
+              });
+            }
+
             // Update memories.json
             const jsonPath = path.resolve(__dirname, 'src/data/memories.json');
             const memories = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             
             const newMemory = {
-              id: Date.now(),
+              id: newMemoryId,
               type: fileType,
               src: `/${folder}/${fileName}`,
               caption: caption,
