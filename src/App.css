@@ -1222,3 +1222,9 @@ video,
   backface-visibility: hidden;
   will-change: transform;
 }
+
+/* Treat heavy components as empty space when off-screen to save RAM */
+.polaroid-scatter-canvas,
+.museum-scroll-wrapper {
+  content-visibility: auto;
+}

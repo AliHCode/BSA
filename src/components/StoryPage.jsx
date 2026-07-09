@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { Calendar, Compass, Coffee, GraduationCap, Video, Image as ImageIcon, ArrowLeft, Grid, Shuffle, X, Maximize2 } from "lucide-react";
 import initialMemories from "../data/memories.json";
 
@@ -163,7 +163,8 @@ export default function StoryPage({ onBackClick }) {
   };
   
   // On desktop, scroll horizontally. Mobile will handle it differently via CSS.
-  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollLimit]);
+  const rawX = useTransform(scrollYProgress, [0, 1], [0, -scrollLimit]);
+  const x = useSpring(rawX, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
     <div className="story-page">
@@ -319,6 +320,7 @@ export default function StoryPage({ onBackClick }) {
                     src={media.src} 
                     alt={media.caption} 
                     className="polaroid-img"
+                    loading="lazy"
                     style={{ objectPosition: `${media.posX !== undefined ? media.posX : 50}% ${media.posY !== undefined ? media.posY : 50}%` }}
                     onError={(e) => {
                       e.target.style.display = 'none';
