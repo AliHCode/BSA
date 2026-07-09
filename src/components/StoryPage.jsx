@@ -216,7 +216,7 @@ export default function StoryPage({ onBackClick }) {
                 <h3>Ali Hall & The Circle Grows</h3>
                 <p style={{ color: "var(--text-gray)", fontSize: "0.9rem", marginBottom: "10px" }}>The Private Mess Gatherings</p>
                 <p>
-                  Second year tak aate aate humara circle expand hua aur private mess humara ultimate hangout spot ban gaya. Wahan Taqi, Qadeer, Abdullah, dono Hamad, Haris aur Haseeb ke sath jo mehfilein jama hoti theen, unhon ne is squad ko forever solid kar diya. Yehi wo waqt tha jab "Bismillah Student Association (BSA)" ka title officially wujood mein aaya. Hum sirf dost nahi rahe thay, hum ek brotherhood ban chuke thay. Har choti baat par party, pranks, aur ek doosre ki taang kheenchna humari pehchaan ban gayi.
+                  Second year tak aate aate humara circle expand hua aur private mess humara ultimate hangout spot ban gaya. Wahan Taqi, Qadeer, Abdullah, dono Hamad, Haris aur Haseeb ke sath jo mehfilein jama hoti theen, unhon ne is squad ko forever solid kar diya. Yehi wo waqt tha jab "Bismillah Student Association (BSA)" ka title officially wujood mein aaya. Hum sirf dost nahi rahe thay, humari ek pakki family ban chuki thi. Har choti baat par party, pranks, aur ek doosre ki taang kheenchna humari pehchaan ban gayi.
                 </p>
               </div>
             </div>

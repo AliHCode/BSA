@@ -1176,6 +1176,29 @@
     font-size: 1rem;
     padding: 0 15px;
   }
+  
+  /* Credits Mobile Formatting */
+  .credits-scroll-window {
+    padding: 0 20px;
+  }
+  .credit-role {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+  }
+  .credit-name {
+    font-size: 1.3rem;
+  }
+  .credit-desc {
+    font-size: 0.85rem;
+  }
+  .tagline-final {
+    letter-spacing: 3px;
+    font-size: 0.75rem !important;
+  }
+  .logo-final {
+    font-size: 3rem !important;
+    letter-spacing: 6px;
+  }
 }
 
 /* ==========================================================================
