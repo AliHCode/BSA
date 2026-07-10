@@ -9,7 +9,7 @@ export default function SquadScroll({ onStoryClick }) {
   const videoSectionRef = useRef(null);
   const isVideoInView = useInView(videoSectionRef, { amount: 0.1, once: false });
 
-  // Shuffle squad members on mount, keeping Ali Hussnain (Meetha) first
+  // Shuffle squad members on mount, keeping Ali Hussnain (Meetha G) first
   useEffect(() => {
     const ali = membersData.find((m) => m.id === "ali");
     const others = membersData.filter((m) => m.id !== "ali");

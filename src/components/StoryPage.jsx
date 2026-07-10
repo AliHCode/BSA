@@ -576,7 +576,7 @@ const CreditsSection = () => {
           >
             <div className="credit-block">
               <h4 className="credit-role">D I R E C T E D &nbsp; & &nbsp; C R E A T E D &nbsp; B Y</h4>
-              <p className="credit-name">Ali Hussnain (Meetha)</p>
+              <p className="credit-name">Ali Hussnain (Meetha G)</p>
               <p className="credit-desc">Memory Archivist</p>
             </div>
             

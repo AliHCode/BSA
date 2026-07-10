@@ -17,7 +17,7 @@ export default function ConfessionsPage() {
 
   const allQuestions = [
     // 10 Selected Complex Questions
-    { q: "Which squad member appears quiet and innocent to the outside world, but is completely different according to the BSA boys?", answers: ["ali", "ali hussnain", "meetha", "hussnain"] },
+    { q: "Which squad member appears quiet and innocent to the outside world, but is completely different according to the BSA boys?", answers: ["ali", "ali hussnain", "meetha g", "meetha", "hussnain"] },
     { q: "Which member follows the strict sequence of first watching an anime, then reading its manga, and finally watching its live-action adaptation?", answers: ["taqi", "muhammad taqi", "shah g", "shahg"] },
     { q: "Which member's birthday celebration marked the exact moment when the BSA was created and everyone got together?", answers: ["abdullah", "muhammad abdullah", "amb"] },
     { q: "Jab wo room mein nahi hota, to sab kuch suna suna lagta hai—who is this positive energy source of BSA?", answers: ["abdullah", "muhammad abdullah", "amb"] },
@@ -29,7 +29,7 @@ export default function ConfessionsPage() {
     { q: "Which member has a mature and balanced personality, knowing exactly when to focus on career goals and when to enjoy hostel life with the boys?", answers: ["hammad abrar", "baba kuki", "buzurg", "hammad", "hammada", "kuki"] },
 
     // Nickname Trivia Questions
-    { q: "Who is the squad member behind the nickname 'Meetha'?", answers: ["ali", "ali hussnain", "hussnain", "meetha"] },
+    { q: "Who is the squad member behind the nickname 'Meetha G'?", answers: ["ali", "ali hussnain", "hussnain", "meetha g", "meetha"] },
     { q: "Who is the squad member behind the nickname 'Shah G'?", answers: ["taqi", "muhammad taqi", "shahg", "shah g"] },
     { q: "Who is the squad member behind the nickname 'AMB'?", answers: ["abdullah", "muhammad abdullah", "amb"] },
     { q: "Who is the squad member behind the nickname 'Grenade/Summit'?", answers: ["qadeer", "muhammad qadeer", "grenade", "summit", "grenade/summit"] },

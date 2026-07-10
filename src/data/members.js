@@ -3,7 +3,7 @@ export const membersData = [
   {
     id: "ali",
     name: "Ali Hussnain",
-    nickname: "Meetha",
+    nickname: "Meetha G",
     role: "The Minimalist Creator",
     tagline: "The Software Engineering student who documented the squad's journey.",
     image: "/images/Ali.jpeg",

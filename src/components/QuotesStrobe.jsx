@@ -18,7 +18,8 @@ const quotes = [
   "Mein Bhatti hun",
   "Summit class ka topper",
   "Mangoooool",
-  "Mature ho gaya hai"
+  "Mature ho gaya hai",
+  "Zehr khanay k paisay nahi hain"
 ];
 
 function QuoteItem({ quote, index, total, scrollYProgress }) {
