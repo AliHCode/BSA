@@ -499,20 +499,20 @@ export default function ConfessionsPage() {
             transition={{ duration: 0.5 }}
             style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", minHeight: "60vh" }}
           >
-            <LockKeyhole size={60} color="#ff2a5f" className="pulse-icon" style={{ marginBottom: "20px" }} />
+            <LockKeyhole color="#ff2a5f" className="pulse-icon" style={{ width: "clamp(40px, 8vw, 60px)", height: "clamp(40px, 8vw, 60px)", marginBottom: "20px" }} />
             
-            <h1 className="glitch-text" data-text="ACCESS DENIED" style={{ fontSize: "3.5rem", color: "#ff2a5f", fontFamily: "var(--font-title)" }}>
+            <h1 className="glitch-text" data-text="ACCESS DENIED" style={{ fontSize: "clamp(2.2rem, 8vw, 3.5rem)", color: "#ff2a5f", fontFamily: "var(--font-title)" }}>
               ACCESS DENIED
             </h1>
             
-            <div className="warning-text" style={{ maxWidth: "700px", marginTop: "30px", fontSize: "1.2rem", color: "#fff" }}>
-              <p style={{ marginBottom: "20px", color: "#ff2a5f", fontWeight: "bold", letterSpacing: "2px" }}>ERROR: SECURITY SHIELD PREVENTED OVERRIDE</p>
+            <div className="warning-text" style={{ maxWidth: "700px", marginTop: "30px", fontSize: "clamp(1rem, 4vw, 1.2rem)", color: "#fff" }}>
+              <p style={{ marginBottom: "20px", color: "#ff2a5f", fontWeight: "bold", letterSpacing: "2px", fontSize: "clamp(0.8rem, 3vw, 1rem)" }}>ERROR: SECURITY SHIELD PREVENTED OVERRIDE</p>
               
-              <p style={{ fontStyle: "italic", color: "#ffaa00", fontSize: "1.3rem", lineHeight: "1.6", borderLeft: "4px solid #ffaa00", paddingLeft: "15px", textAlign: "left" }}>
+              <p style={{ fontStyle: "italic", color: "#ffaa00", fontSize: "clamp(1rem, 4.5vw, 1.3rem)", lineHeight: "1.6", borderLeft: "4px solid #ffaa00", paddingLeft: "15px", textAlign: "left" }}>
                 "Dil toh bohot chahta hai ke sab sach bata dun, lekin phir do cheezein hongi: ya toh kuch log shadeed offend ho jayenge, ya humari aglay hi din DSA mein peshi ho jayegi. Safety first!"
               </p>
               
-              <p style={{ marginTop: "30px", color: "#ccc", lineHeight: "1.8" }}>
+              <p style={{ marginTop: "30px", color: "#ccc", lineHeight: "1.8", fontSize: "clamp(0.9rem, 3.5vw, 1rem)" }}>
                 We've done some truly chaotic things that are best kept in the shadows. 
                 This vault is strictly sealed and will automatically decrypt <strong>ONLY</strong> after we officially graduate and leave the university premises safely.
               </p>

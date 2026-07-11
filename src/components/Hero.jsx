@@ -266,7 +266,7 @@ export default function Hero({ onStartClick }) {
                 className="hero-editorial-desc"
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
               >
-                BSA is a group of eight friends who turned hostel life into pure chaos. From wild pranks and hiding day scholars' phones to turning Room 235 into an absolute madhouse, this is their story.
+                Bismillah Student Association (BSA) is a group of eight friends who turned hostel life into pure chaos. From wild pranks and hiding day scholars' phones to turning Room 235 into an absolute madhouse, this is their story.
               </motion.p>
               
             </motion.div>
